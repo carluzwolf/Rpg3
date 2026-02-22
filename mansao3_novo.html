@@ -1,0 +1,3083 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MANSÃO III — Chamas</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Bebas+Neue&family=Raleway:wght@200;300;400;500&display=swap');
+
+:root {
+  --bg: #07060a;
+  --surface: #0f0d14;
+  --surface2: #171320;
+  --ember: #c85a1a;
+  --ember2: #e8804a;
+  --ember3: #ff9960;
+  --wine: #7a1530;
+  --wine2: #b02850;
+  --gold: #b89030;
+  --gold2: #d8b050;
+  --sage: #3a7050;
+  --sage2: #5a9870;
+  --lilac: #7030a0;
+  --lilac2: #9858c8;
+  --coral: #d06040;
+  --coral2: #f08060;
+  --teal: #208090;
+  --teal2: #40b0c0;
+  --cream: #ede5d5;
+  --muted: #7a6a70;
+  --muted2: #5a4a50;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  line-height: 1.85;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* GRAIN */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+  opacity:.7;
+}
+
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(200,90,26,.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 10%, rgba(122,21,48,.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(112,48,160,.04) 0%, transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+
+#app { position:relative; z-index:1; }
+
+/* ═══════════════════════════════════
+   SPLASH — VERTICAL SPLIT LAYOUT
+═══════════════════════════════════ */
+#splash {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  position: relative;
+}
+
+@media (max-width: 700px) {
+  #splash { grid-template-columns: 1fr; }
+  .splash-left { display:none; }
+}
+
+.splash-left {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.splash-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(200,90,26,.15) 0%, rgba(122,21,48,.2) 50%, rgba(112,48,160,.1) 100%);
+}
+
+.splash-flame-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flame-iii {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(160px, 22vw, 280px);
+  line-height: 1;
+  background: linear-gradient(180deg, var(--ember3) 0%, var(--ember) 40%, var(--wine2) 70%, transparent 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 80px rgba(200,90,26,.4));
+  letter-spacing: -4px;
+  user-select: none;
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { filter: drop-shadow(0 0 60px rgba(200,90,26,.3)); }
+  50% { filter: drop-shadow(0 0 120px rgba(200,90,26,.6)); }
+}
+
+.splash-chars {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.s-char-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  color: var(--muted);
+  animation: slideRight .6s ease both;
+}
+
+.s-char-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.splash-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 48px;
+  position: relative;
+}
+
+@keyframes riseIn {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:none; }
+}
+@keyframes slideRight {
+  from { opacity:0; transform:translateX(-16px); }
+  to { opacity:1; transform:none; }
+}
+
+.sp-label {
+  font-family: 'Raleway', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 8px;
+  color: var(--ember);
+  margin-bottom: 24px;
+  animation: riseIn .8s .1s both;
+}
+
+.sp-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(48px, 8vw, 88px);
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--cream);
+  margin-bottom: 8px;
+  animation: riseIn .8s .2s both;
+}
+
+.sp-subtitle {
+  font-style: italic;
+  font-size: 18px;
+  color: var(--muted);
+  margin-bottom: 40px;
+  animation: riseIn .8s .3s both;
+}
+
+.sp-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, var(--ember), transparent);
+  margin-bottom: 32px;
+  animation: riseIn .8s .35s both;
+}
+
+.sp-warn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--wine2);
+  border: 1px solid rgba(176,40,80,.2);
+  padding: 10px 16px;
+  margin-bottom: 48px;
+  animation: riseIn .8s .4s both;
+}
+
+.sp-summary {
+  font-size: 15px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.9;
+  margin-bottom: 48px;
+  max-width: 380px;
+  animation: riseIn .8s .45s both;
+}
+
+.btn-enter {
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  padding: 18px 40px;
+  background: transparent;
+  border: 1px solid var(--ember);
+  color: var(--ember2);
+  cursor: pointer;
+  transition: all .4s;
+  width: fit-content;
+  animation: riseIn .8s .5s both;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-enter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ember);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+  z-index: -1;
+}
+
+.btn-enter:hover::before { transform: scaleX(1); }
+.btn-enter:hover { color: var(--bg); }
+
+/* ═══════════════════════════════════
+   GAME LAYOUT — SIDEBAR + MAIN
+═══════════════════════════════════ */
+#gameview {
+  display: none;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+#sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid rgba(255,255,255,.04);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.sidebar-logo {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+
+.sidebar-logo-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  background: linear-gradient(135deg, var(--ember2), var(--wine2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
+}
+
+.sidebar-logo-sub {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: var(--muted2);
+  font-weight: 300;
+}
+
+.sidebar-section {
+  padding: 16px 0 8px;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+
+.sidebar-label {
+  font-family: 'Raleway', sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  color: var(--muted2);
+  padding: 0 24px 10px;
+}
+
+/* CHARACTER TABS */
+.char-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 24px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  cursor: pointer;
+  transition: all .2s;
+  text-align: left;
+  position: relative;
+}
+
+.char-btn::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--ember);
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.char-btn:hover { color: var(--cream); background: rgba(255,255,255,.03); }
+.char-btn.active { color: var(--cream); background: rgba(255,255,255,.04); }
+.char-btn.active::after { opacity: 1; }
+
+.char-btn-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.char-btn-name { flex: 1; }
+.char-btn-emoji { font-size: 12px; }
+
+/* MOOD METER */
+.sidebar-tension {
+  padding: 20px 24px;
+  flex: 1;
+}
+
+.tension-label {
+  font-family: 'Raleway', sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  color: var(--muted2);
+  margin-bottom: 14px;
+}
+
+.tension-bar-wrap {
+  margin-bottom: 10px;
+}
+
+.tension-name {
+  font-family: 'Raleway', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 5px;
+  font-weight: 300;
+}
+
+.tension-bar {
+  height: 2px;
+  background: rgba(255,255,255,.06);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.tension-fill {
+  height: 100%;
+  border-radius: 1px;
+  transition: width 1s ease;
+}
+
+/* SIDEBAR BOTTOM */
+.sidebar-bottom {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255,255,255,.04);
+}
+
+.heat-indicator {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: var(--muted2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.heat-pips {
+  display: flex;
+  gap: 3px;
+}
+
+.pip {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  transition: background .4s;
+}
+
+.pip.lit { background: var(--ember); }
+.pip.hot { background: var(--wine2); }
+
+/* ═══════════════════════════════════
+   MAIN CONTENT AREA
+═══════════════════════════════════ */
+#main {
+  margin-left: 220px;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* SCENE AREA */
+#scene-area {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 40px 120px;
+}
+
+/* SCENE HEADER */
+.scene-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 44px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  animation: riseIn .4s ease both;
+}
+
+.scene-pov-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pov-who {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 3px;
+  line-height: 1;
+}
+
+.pov-loc {
+  font-family: 'Raleway', sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.scene-number {
+  font-family: 'Raleway', sans-serif;
+  font-size: 10px;
+  font-weight: 200;
+  letter-spacing: 3px;
+  color: var(--muted2);
+  text-align: right;
+}
+
+/* NARRATIVE BODY */
+.narr-body {
+  margin-bottom: 56px;
+  animation: riseIn .5s .05s ease both;
+}
+
+.narr {
+  font-size: 18px;
+  line-height: 1.95;
+  color: var(--cream);
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.narr em, .narr i { color: var(--ember2); font-style: italic; }
+.narr strong { font-weight: 600; color: var(--cream); }
+.narr.italic-all { font-style: italic; color: var(--muted); }
+
+/* HOT SCENES */
+.narr.hot {
+  padding: 0 0 0 20px;
+  border-left: 2px solid rgba(200,90,26,.2);
+  color: #e8d8c8;
+}
+
+/* DIALOGUES — CARD STYLE */
+.dial-card {
+  margin: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  animation: riseIn .4s ease both;
+}
+
+.dial-speaker {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  padding: 6px 16px;
+  background: rgba(255,255,255,.03);
+  border-top: 1px solid rgba(255,255,255,.05);
+  border-left: 1px solid rgba(255,255,255,.05);
+  border-right: 1px solid rgba(255,255,255,.05);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  border-radius: 4px 4px 0 0;
+}
+
+.dial-speaker-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+}
+
+.dial-text {
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.75;
+  padding: 16px 20px;
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 0 6px 6px 6px;
+  background: rgba(255,255,255,.02);
+  color: var(--cream);
+}
+
+/* NOTIFICATION / ASIDE */
+.aside-block {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+  padding: 14px 18px;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 6px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+  font-weight: 300;
+  font-family: 'Raleway', sans-serif;
+  animation: riseIn .35s ease both;
+}
+
+.aside-icon { font-size: 15px; flex-shrink: 0; padding-top: 2px; }
+
+/* ═══════════════════════════════════
+   CHOICES — COMPLETELY NEW MECHANIC
+   "DISPOSITION WHEEL" — player picks
+   an emotional stance, not just an action
+═══════════════════════════════════ */
+#choices-area {
+  animation: riseIn .5s .1s ease both;
+}
+
+.choices-label {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  color: var(--muted2);
+  margin-bottom: 20px;
+}
+
+/* CHOICE CARDS — horizontal magazine layout */
+.choices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.choice-card {
+  position: relative;
+  padding: 20px 18px;
+  border: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.02);
+  cursor: pointer;
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  border-radius: 2px;
+  overflow: hidden;
+  text-align: left;
+}
+
+.choice-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--card-accent, var(--ember));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+
+.choice-card:hover { border-color: rgba(255,255,255,.15); background: rgba(255,255,255,.04); transform: translateY(-2px); }
+.choice-card:hover::before { transform: scaleX(1); }
+
+.choice-tag {
+  font-family: 'Raleway', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--card-accent, var(--ember));
+  margin-bottom: 10px;
+  display: block;
+}
+
+.choice-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.55;
+}
+
+.choice-arrow {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  font-size: 16px;
+  color: var(--muted2);
+  transition: all .3s;
+}
+
+.choice-card:hover .choice-arrow {
+  color: var(--card-accent, var(--ember));
+  transform: translateX(3px);
+}
+
+/* POV SWITCH ROW */
+.pov-switch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.04);
+}
+
+.pov-switch-label {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  color: var(--muted2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.pov-btn {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  padding: 7px 18px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pov-btn:hover { border-color: rgba(255,255,255,.2); color: var(--cream); }
+.pov-btn-dot { width: 5px; height: 5px; border-radius: 50%; }
+
+/* ═══════════════════════════════════
+   ENDING SCREEN
+═══════════════════════════════════ */
+#endscreen {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 80px 24px;
+  position: relative;
+}
+
+.end-bg-word {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(120px, 30vw, 320px);
+  color: rgba(255,255,255,.02);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.end-inner { position: relative; z-index: 1; max-width: 600px; }
+
+.end-label {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 8px;
+  color: var(--muted2);
+  margin-bottom: 28px;
+}
+
+.end-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(52px, 10vw, 96px);
+  line-height: 1;
+  margin-bottom: 32px;
+  letter-spacing: -1px;
+}
+
+.end-title.flame { color: var(--ember2); text-shadow: 0 0 80px rgba(200,90,26,.4); }
+.end-title.smoke { color: var(--muted); }
+.end-title.bloom { color: var(--sage2); text-shadow: 0 0 60px rgba(90,152,112,.3); }
+.end-title.storm { color: var(--lilac2); }
+.end-title.ember { color: var(--gold2); }
+
+.end-text {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 2;
+  margin-bottom: 12px;
+  font-weight: 300;
+}
+
+.end-flag {
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--muted2);
+  margin-bottom: 48px;
+}
+
+.btn-restart {
+  font-family: 'Raleway', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  padding: 16px 36px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.12);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.btn-restart:hover { border-color: var(--ember); color: var(--cream); }
+
+/* MOBILE */
+@media (max-width: 780px) {
+  #sidebar { width: 100%; position: fixed; top: auto; bottom: 0; left: 0; right: 0; height: auto; flex-direction: row; overflow-x: auto; border-right: none; border-top: 1px solid rgba(255,255,255,.06); }
+  #sidebar .sidebar-logo, #sidebar .sidebar-tension, #sidebar .sidebar-section-label { display: none; }
+  #sidebar .sidebar-section { padding: 0; border: none; display: flex; flex-direction: row; align-items: center; }
+  .char-btn { padding: 14px 16px; font-size: 13px; white-space: nowrap; }
+  .char-btn::after { width: 100%; height: 2px; top: auto; bottom: 0; left: 0; }
+  .sidebar-bottom { display: none; }
+  #main { margin-left: 0; }
+  #scene-area { padding: 40px 20px 100px; }
+  .choices-grid { grid-template-columns: 1fr; }
+  #gameview { display: block; }
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(200,90,26,.2); }
+
+/* COLORS PER CHARACTER */
+.color-Mel    { --char-color: var(--wine2); }
+.color-Joy    { --char-color: var(--ember2); }
+.color-Ellie  { --char-color: var(--teal2); }
+.color-Carluz { --char-color: var(--gold2); }
+.color-Eros   { --char-color: var(--gold); }
+.color-Stephany { --char-color: var(--lilac2); }
+.color-Mary   { --char-color: var(--sage2); }
+.color-Pollyana { --char-color: var(--coral2); }
+
+/* Dynamic pov name coloring via JS */
+.pov-Mel    { color: var(--wine2); }
+.pov-Joy    { color: var(--ember2); }
+.pov-Ellie  { color: var(--teal2); }
+.pov-Carluz { color: var(--gold2); }
+.pov-Eros   { color: var(--gold); }
+.pov-Stephany { color: var(--lilac2); }
+.pov-Mary   { color: var(--sage2); }
+.pov-Pollyana { color: var(--coral2); }
+
+/* char colors in text */
+.cMel     { color: #d07090; }
+.cJoy     { color: #e08060; }
+.cEllie   { color: #40a8b8; }
+.cCarluz  { color: #c8a840; }
+.cEros    { color: #d09830; }
+.cSte     { color: #a060d0; }
+.cMary    { color: #50b890; }
+.cPoll    { color: #e07050; }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ═══ SPLASH ═══ -->
+<div id="splash">
+  <div class="splash-left">
+    <div class="splash-flame-art">
+      <div class="flame-iii">III</div>
+    </div>
+    <div class="splash-chars">
+      <div class="s-char-row" style="animation-delay:.3s"><span class="s-char-dot" style="background:#d07090"></span>MEL</div>
+      <div class="s-char-row" style="animation-delay:.4s"><span class="s-char-dot" style="background:#e08060"></span>JOY</div>
+      <div class="s-char-row" style="animation-delay:.5s"><span class="s-char-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="s-char-row" style="animation-delay:.6s"><span class="s-char-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="s-char-row" style="animation-delay:.7s"><span class="s-char-dot" style="background:#d09830"></span>EROS</div>
+      <div class="s-char-row" style="animation-delay:.8s"><span class="s-char-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="s-char-row" style="animation-delay:.9s"><span class="s-char-dot" style="background:#50b890"></span>MARY</div>
+      <div class="s-char-row" style="animation-delay:1s"><span class="s-char-dot" style="background:#e07050"></span>POLLYANA</div>
+    </div>
+  </div>
+
+  <div class="splash-right">
+    <div class="sp-label">PARTE III</div>
+    <div class="sp-title">Chamas</div>
+    <div class="sp-subtitle">o que resta quando a mentira pega fogo</div>
+    <div class="sp-divider"></div>
+    <div class="sp-warn">⚠ Conteúdo adulto explícito — 18+ — Continuação da Parte II</div>
+    <div class="sp-summary">
+      A mansão está acordando depois do confronto. A <span style="color:#d07090">Mel</span> precisa decidir sobre a <span style="color:#e08060">Joy</span>. A <span style="color:#a060d0">Stephany</span> fugiu da <span style="color:#50b890">Mary</span>. O <span style="color:#d09830">Eros</span> carrega um segredo. A <span style="color:#e07050">Pollyana</span> está vendo tudo — e sabe mais do que deixa parecer.
+    </div>
+    <button class="btn-enter" onclick="startGame()">ENTRAR</button>
+  </div>
+</div>
+
+<!-- ═══ GAME VIEW ═══ -->
+<div id="gameview">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-title">MANSÃO</div>
+      <div class="sidebar-logo-sub">PARTE III · CHAMAS</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">PERSPECTIVA</div>
+      <div id="char-list"></div>
+    </div>
+
+    <div class="sidebar-tension">
+      <div class="tension-label">TENSÃO</div>
+      <div id="tension-meters"></div>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="tension-label" style="margin-bottom:12px">INTENSIDADE</div>
+      <div class="heat-indicator">
+        <span id="heat-label">NEUTRO</span>
+        <div class="heat-pips" id="heat-pips">
+          <div class="pip" id="p1"></div>
+          <div class="pip" id="p2"></div>
+          <div class="pip" id="p3"></div>
+          <div class="pip" id="p4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="scene-area"></div>
+  </div>
+</div>
+
+<!-- ═══ ENDING ═══ -->
+<div id="endscreen">
+  <div class="end-bg-word" id="end-bg-word">FIM</div>
+  <div class="end-inner">
+    <div class="end-label">— FIM —</div>
+    <div class="end-title" id="end-title"></div>
+    <div class="end-text" id="end-text"></div>
+    <div class="end-flag" id="end-flag"></div>
+    <button class="btn-restart" onclick="restart()">↺ RECOMEÇAR</button>
+  </div>
+</div>
+
+</div><!-- #app -->
+
+<script>
+// ══════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════
+const CHARS = {
+  Mel:      { color:'#d07090', dot:'var(--wine2)',   emoji:'💋', tension: 75 },
+  Joy:      { color:'#e08060', dot:'var(--ember2)',  emoji:'🍷', tension: 70 },
+  Ellie:    { color:'#40a8b8', dot:'var(--teal2)',   emoji:'🌊', tension: 55 },
+  Carluz:   { color:'#c8a840', dot:'var(--gold2)',   emoji:'⚡', tension: 60 },
+  Eros:     { color:'#d09830', dot:'var(--gold)',    emoji:'🔥', tension: 65 },
+  Stephany: { color:'#a060d0', dot:'var(--lilac2)',  emoji:'🌸', tension: 70 },
+  Mary:     { color:'#50b890', dot:'var(--sage2)',   emoji:'🌿', tension: 60 },
+  Pollyana: { color:'#e07050', dot:'var(--coral2)',  emoji:'🌻', tension: 45 },
+};
+
+let G = { pov:'Mel', flags:{}, hist:[], sceneCount:0 };
+
+// tension state (changes based on flags)
+const TENSION = { ...Object.fromEntries(Object.entries(CHARS).map(([k,v])=>[k,v.tension])) };
+
+// ══════════════════════════════════════════════
+// SCENES
+// ══════════════════════════════════════════════
+const S = {
+
+// ─── ABERTURA ────────────────────────────────
+abertura: {
+  pov:'Mel', loc:'Mansão — manhã do segundo dia',
+  heat:0,
+  narr:`
+    <p class="narr">A mansão acorda devagar, como quem não quer encarar o dia.</p>
+    <p class="narr"><span class="cMel">Mel</span> fica na beira da cama olhando pro reflexo na janela. O confronto de ontem ainda ressoa — a <span class="cCarluz">Carluz</span> com a xícara fria, o <span class="cEros">Eros</span> olhando pro chão, a <span class="cMary">Mary</span> pedindo desculpa com os olhos antes mesmo de abrir a boca. Tudo explodiu e, de algum jeito, a mansão continua de pé.</p>
+    <p class="narr">Tem uma coisa que ela não para de pensar: a <span class="cJoy">Joy</span> saiu da cozinha sem olhar pra ninguém. E desde então, silêncio total.</p>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b class="cJoy">Joy</b>: <i>"Tô na piscina. Se quiser conversar de verdade, você sabe onde me achar."</i></span></div>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b class="cEllie">Ellie</b>: <i>"Bom dia. Tô na cozinha sozinha se precisar de café e silêncio."</i></span></div>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b class="cPoll">Pollyana</b>: <i>"Acordei cedo. Jardim está lindo. Você dormiu?"</i></span></div>
+  `,
+  choices:[
+    { tag:'ENFRENTAR', text:'Ir até a piscina — encarar a Joy agora', next:'mel_piscina_joy', accent:'#e08060', flag:{mel_foi_piscina:true} },
+    { tag:'RESPIRAR', text:'Café com a Ellie primeiro. Depois a Joy.', next:'mel_cozinha_ellie', accent:'#40a8b8' },
+    { tag:'ANCORAR', text:'Ir ao jardim ver a Pollyana antes de qualquer coisa', next:'mel_jardim_pollyana', accent:'#e07050' },
+    { tag:'OBSERVAR', text:'Ficar no quarto. Deixar a mansão se organizar sozinha.', next:'mel_quarto_observa', accent:'#7a6a70' },
+  ],
+  sw:['Mel','Joy','Ellie','Pollyana'],
+},
+
+// ─── JOY POV — PISCINA ────────────────────────
+joy_piscina_pov: {
+  pov:'Joy', loc:'Piscina — manhã cedo',
+  heat:0,
+  narr:`
+    <p class="narr">A <span class="cJoy">Joy</span> está deitada na espreguiçadeira com óculos de sol, mas não está dormindo. Está contando os segundos.</p>
+    <p class="narr">Ela mandou aquela mensagem pra <span class="cMel">Mel</span> há quinze minutos. Sabe que ela vai vir. A <span class="cMel">Mel</span> sempre vai — mesmo quando não quer. É a coisa que Joy mais ama nela e a que mais a culpa.</p>
+    <p class="narr">Ela tira os óculos. Olha pro céu. Pensa no beijo de dois dias atrás — rápido, elétrico, dos dois lados de uma guerra que nenhuma delas declarou oficialmente.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text"><i>(para si mesma)</i> Você não merece ela de volta. Mas vai tentar mesmo assim.</div>
+    </div>
+    <p class="narr">Passos na pedra molhada da beira da piscina.</p>
+  `,
+  choices:[
+    { tag:'CONTINUAR', text:'Ela chegou — continuar como Joy', next:'mel_piscina_joy', accent:'#e08060' },
+    { tag:'MUDAR', text:'Sentir a chegada pelo ponto de vista da Mel', next:'mel_piscina_joy', accent:'#d07090' },
+  ],
+  sw:['Joy','Mel'],
+},
+
+// ─── MEL + JOY — PISCINA ────────────────────────
+mel_piscina_joy: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> para na borda. A <span class="cJoy">Joy</span> não se move — mantém os olhos fechados, como se estivesse esperando sem admitir que está esperando.</p>
+    <p class="narr">Maiô preto, cabelo molhado, óculos de sol na testa. Parece descansada. É mentira — Mel conhece o aperto na mandíbula quando Joy está segurando algo.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Você passou a noite aqui fora?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Passei em cima. Mas não consegui dormir. Vim cedo.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Por que você foi embora assim da cozinha?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Porque se eu ficasse ia dizer alguma coisa que não era sobre o Eros ou a Carluz. Era sobre você. E a cozinha cheia não era o lugar certo.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ABRIR', text:'Sentar do lado dela. "E agora? Aqui é o lugar certo?"', next:'mel_joy_conversa_beira', accent:'#e08060', flag:{mel_sentou_joy:true} },
+    { tag:'GUARDAR', text:'Ficar de pé. Distância segura. "Fala então."', next:'mel_joy_distancia', accent:'#7a6a70' },
+    { tag:'ENTENDER', text:'Mudar perspectiva — o que Joy quer dizer', next:'joy_piscina_confissao', accent:'#e08060' },
+  ],
+  sw:['Mel','Joy','Ellie'],
+},
+
+joy_piscina_confissao: {
+  pov:'Joy', loc:'Beira da piscina',
+  heat:1,
+  narr:`
+    <p class="narr">A <span class="cMel">Mel</span> ficou de pé. A <span class="cJoy">Joy</span> sabia que ela ia ficar. Mel sempre coloca distância quando está com medo.</p>
+    <p class="narr">Não tem direito a nada — não depois de ter sido exatamente o problema que foi. Mas o amor não pede permissão pra existir, só pra ser dito.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Eu quero te pedir uma coisa. Uma chance. Não de recuperar o que a gente tinha — isso acabou, eu sei. Mas de começar diferente. Mais devagar. Mais honesta.</div>
+    </div>
+    <p class="narr">Ela olha pra Mel agora. Diretamente.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Você não precisa responder agora. Só queria que você soubesse que é isso que eu quero.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'SENTIR', text:'Voltar pra Mel — ouvir isso como ela', next:'mel_reage_confissao_joy', accent:'#d07090' },
+    { tag:'ESPERAR', text:'Como Joy — esperar a resposta da Mel', next:'mel_reage_confissao_joy', accent:'#e08060' },
+  ],
+  sw:['Joy','Mel'],
+},
+
+mel_reage_confissao_joy: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> olha pra ela por um tempo longo.</p>
+    <p class="narr">A parte dela que ainda dói quer dizer que não. A parte dela que passou dois meses acordada às 3h quer dizer outra coisa.</p>
+  `,
+  choices:[
+    { tag:'SIM', text:'"Tá bem. Mais devagar. Mais honesta. Vou tentar."', next:'mel_joy_aceita', accent:'#e08060', flag:{mel_aceitou_joy:true} },
+    { tag:'DOR', text:'"Eu não sei se consigo, Joy. Ainda dói."', next:'mel_joy_honesta_dor', accent:'#d07090' },
+    { tag:'SILÊNCIO', text:'Não falar. Sentar do lado dela e olhar pra piscina.', next:'mel_joy_silencio_piscina', accent:'#7a6a70' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+mel_joy_silencio_piscina: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:2,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> senta do lado da <span class="cJoy">Joy</span>. Os ombros se encostam. Nenhuma fala.</p>
+    <p class="narr">O sol está esquentando. A água da piscina brilha. Em algum lugar dentro da mansão alguém está fazendo café — o cheiro chega até aqui.</p>
+    <p class="narr">A <span class="cJoy">Joy</span> vira o rosto devagar. A distância entre elas é de menos de um palmo.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text"><i>(quase sussurro)</i> Mel.</div>
+    </div>
+    <p class="narr">A forma como ela diz o nome — lento, como se o nome em si fosse uma pergunta — é o que desfaz o nó que <span class="cMel">Mel</span> carregou nos últimos dois meses.</p>
+  `,
+  choices:[
+    { tag:'CEDER', text:'Deixar acontecer — o beijo na beira da piscina', next:'mel_joy_beijo_piscina', accent:'#e08060' },
+    { tag:'PAUSAR', text:'Recuar. "Não aqui. Não assim." Mas sem ir embora.', next:'mel_joy_recua_mas_fica', accent:'#d07090' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+mel_joy_beijo_piscina: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:3,
+  narr:`
+    <p class="narr hot">O beijo começa devagar — mais devagar do que todos os outros que elas tiveram. A <span class="cJoy">Joy</span> coloca a mão na nuca de <span class="cMel">Mel</span> como se estivesse segurando algo precioso, e Mel, sem perceber, fecha os olhos.</p>
+    <p class="narr hot">Quando elas se separam, as bocas ainda perto, <span class="cMel">Mel</span> sente a respiração da <span class="cJoy">Joy</span> — acelerada, descontrolada. <i>Igual a mim</i>, ela pensa.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text"><i>(rouca)</i> A gente podia ir pra dentro.</div>
+    </div>
+    <div class="aside-block"><span class="aside-icon">👁️</span><span>Da janela da cozinha, <b class="cEllie">Ellie</b> vê as duas. Olha por um segundo. Vira de costas. Do jardim, <b class="cPoll">Pollyana</b> também vê — e fecha os olhos devagar.</span></div>
+  `,
+  choices:[
+    { tag:'ACEITAR', text:'"Sim." Ir pra dentro com ela.', next:'mel_joy_quarto', accent:'#e08060', flag:{mel_joy_quarto_flag:true} },
+    { tag:'PAUSAR', text:'Olhar pro lado — a janela da cozinha. Ellie viu.', next:'mel_viu_ellie_janela', accent:'#40a8b8', flag:{mel_preocupada_ellie:true} },
+  ],
+  sw:['Mel','Joy','Ellie','Pollyana'],
+},
+
+mel_joy_quarto: {
+  pov:'Mel', loc:'Quarto da Joy — segundo andar',
+  heat:4,
+  narr:`
+    <p class="narr hot">O quarto da <span class="cJoy">Joy</span> é sempre um retrato dela — bagunçado de um jeito intencional, perfume forte no ar, cortinas que bloqueiam a luz mas não o calor do sol.</p>
+    <p class="narr hot"><span class="cMel">Mel</span> nem termina de fechar a porta quando a <span class="cJoy">Joy</span> a vira de frente pra ela. As mãos dela exploram o rosto de Mel, o pescoço, os ombros com a urgência de quem passou muito tempo sem tocar o que queria.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text"><i>(entre beijos)</i> Despacio. Você disse despacio.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text"><i>(sorrindo contra a boca dela)</i> Eu sei. Mas é difícil quando é você.</div>
+    </div>
+    <p class="narr hot">Elas caem na cama sem cerimônia. A <span class="cJoy">Joy</span> se instala sobre a <span class="cMel">Mel</span> e a olha de cima — aquele olhar que Mel nunca soube desviar, intenso e suave ao mesmo tempo, como brasa que não queima mas aquece até o osso.</p>
+    <p class="narr hot">As mãos da <span class="cJoy">Joy</span> sobem devagar pela cintura de Mel, deslizando sob o tecido da blusa — pele contra pele, quente. Mel arqueia levemente, instintivo.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text"><i>(bem baixinho, lábios no pescoço dela)</i> Eu com saudade de você é uma coisa ridícula. Dois anos e eu ainda não sei viver sem isso.</div>
+    </div>
+    <p class="narr hot">A tarde passa dentro daquele quarto. A mansão continua girando lá fora, mas aqui dentro o tempo tem outro ritmo — mais lento, mais honesto. É a primeira vez em muito tempo que <span class="cMel">Mel</span> não está pensando no próximo passo.</p>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b class="cPoll">Pollyana</b> para na frente do quarto da Joy no corredor. Não bate. Escuta o silêncio. Vai embora com um sorriso pequeno.</span></div>
+  `,
+  choices:[
+    { tag:'FICAR', text:'[Depois] Ficar. Conversar de verdade.', next:'mel_joy_depois_quarto', accent:'#d07090', flag:{mel_joy_depois:true} },
+    { tag:'SAIR', text:'[Depois] Sair antes que alguém perceba.', next:'mel_sai_quarto_joy', accent:'#7a6a70' },
+    { tag:'MUDAR', text:'Ver o que a Ellie está sentindo enquanto isso', next:'ellie_viu_janela_pov', accent:'#40a8b8' },
+  ],
+  sw:['Mel','Joy','Ellie','Pollyana'],
+},
+
+mel_joy_depois_quarto: {
+  pov:'Mel', loc:'Quarto da Joy — tarde',
+  heat:2,
+  narr:`
+    <p class="narr">Elas ficam deitadas de lado, frente a frente. A <span class="cJoy">Joy</span> traça devagar o contorno do rosto de <span class="cMel">Mel</span> com a ponta do dedo.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">O que você quer disso? De verdade. Não o que é certo ou o que vai machucar menos. O que você quer.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Quero que isso seja diferente dessa vez.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Pode ser. <i>— Você disse isso antes. — Eu sei. Mas eu disse antes sem entender o que custava falhar. Agora eu sei.</i></div>
+    </div>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b class="cEllie">Ellie</b> para na frente da porta do quarto da Joy. Não bate. Fica parada por um segundo. Vai embora.</span></div>
+  `,
+  choices:[
+    { tag:'RESPONSABILIDADE', text:'Ir falar com a Ellie — você precisa fazer isso', next:'mel_vai_atras_ellie_real', accent:'#40a8b8', flag:{mel_foi_ellie_depois:true} },
+    { tag:'EGOÍSMO', text:'Ficar. A Ellie pode esperar.', next:'mel_ignora_ellie_novo', accent:'#7a6a70' },
+    { tag:'EMPATIA', text:'[Mudar] Seguir a Ellie — o que ela está sentindo agora?', next:'ellie_corredor_dor', accent:'#40a8b8' },
+  ],
+  sw:['Mel','Joy','Ellie'],
+},
+
+// ─── ELLIE — DOR SILENCIOSA ────────────────────
+ellie_corredor_dor: {
+  pov:'Ellie', loc:'Corredor — segundo andar',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEllie">Ellie</span> anda devagar pelo corredor. Não tem pressa. Não tem destino.</p>
+    <p class="narr">Ela sabe — ouviu. Não as palavras, mas o silêncio específico de um quarto fechado que está cheio. Esse silêncio tem textura.</p>
+    <p class="narr">Ela não vai chorar. Não é o tipo. Mas fica parada em frente à janela do corredor por mais tempo do que devia.</p>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b class="cSte">Stephany</b>: <i>"Onde você tá? Preciso te contar uma coisa sobre a Mary"</i></span></div>
+    <div class="aside-block"><span class="aside-icon">🌻</span><span><b class="cPoll">Pollyana</b> aparece no fim do corredor. Olha pra Ellie. Não fala. Só fica ali por um segundo — disponível.</span></div>
+  `,
+  choices:[
+    { tag:'APOIO', text:'Ir até a Pollyana — ela claramente já sabe', next:'ellie_pollyana_corredor', accent:'#e07050' },
+    { tag:'AMIZADE', text:'Ir até a Stephany', next:'ellie_ste_news_mary', accent:'#a060d0' },
+    { tag:'ISOLAMENTO', text:'Ir pra biblioteca — precisa de distância', next:'ellie_biblioteca_sozinha', accent:'#40a8b8' },
+  ],
+  sw:['Ellie','Stephany','Mary','Pollyana'],
+},
+
+ellie_pollyana_corredor: {
+  pov:'Ellie', loc:'Corredor',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cPoll">Pollyana</span> não pergunta o que aconteceu. Só encosta na parede do lado de <span class="cEllie">Ellie</span>.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Você viu.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Eu vi.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Tô bem.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(sem julgamento)</i> Eu sei. Você vai ficar. Mas agora não precisa fingir que já está.</div>
+    </div>
+    <p class="narr"><span class="cEllie">Ellie</span> olha pra ela. Algo no peito afrouxa um milímetro.</p>
+  `,
+  choices:[
+    { tag:'HONESTA', text:'Admitir pra Pollyana o que está sentindo de verdade', next:'ellie_poll_confessa', accent:'#e07050', flag:{ellie_abriu_poll:true} },
+    { tag:'FECHAR', text:'Agradecer com um gesto. Ir pra biblioteca.', next:'ellie_biblioteca_sozinha', accent:'#40a8b8' },
+  ],
+  sw:['Ellie','Pollyana'],
+},
+
+ellie_poll_confessa: {
+  pov:'Ellie', loc:'Corredor',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Eu sabia que ia acontecer. Faz tempo. Só não sei por que ainda dói sabendo que ia acontecer.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Porque saber não protege. Nunca protege. Só a gente finge que sim pra se sentir mais esperta.</div>
+    </div>
+    <p class="narr"><span class="cEllie">Ellie</span> ri — pequeno, mas genuíno.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Como você é tão... calma com essas coisas?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(sincera)</i> Eu não sou calma. Eu só aprendi a respirar primeiro. É diferente.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'CONTINUAR', text:'Ficar ali um tempo. Não precisar ir a lugar nenhum.', next:'ellie_biblioteca_sozinha', accent:'#e07050' },
+    { tag:'MUDAR', text:'Ver o que está acontecendo com Stephany e Mary', next:'ste_mary_manha_pov', accent:'#a060d0' },
+  ],
+  sw:['Ellie','Pollyana'],
+},
+
+ellie_biblioteca_sozinha: {
+  pov:'Ellie', loc:'Biblioteca',
+  heat:0,
+  narr:`
+    <p class="narr">A biblioteca tem aquela qualidade de lugar que não julga. <span class="cEllie">Ellie</span> fica de costas numa prateleira, de olhos fechados.</p>
+    <p class="narr">Ela pensou — brevemente, seriamente — em dizer algo pra <span class="cMel">Mel</span>. Mais cedo, antes da piscina. Mas a <span class="cJoy">Joy</span> chegou primeiro e isso não é culpa de ninguém, é só como as coisas são.</p>
+    <p class="narr">A porta da biblioteca se abre.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">Achei que você tivesse aqui.</div>
+    </div>
+    <p class="narr">A <span class="cMary">Mary</span> entra e fecha a porta. Parece agitada.</p>
+  `,
+  choices:[
+    { tag:'OUVIR', text:'"O que foi?"', next:'mary_segredo_ellie', accent:'#50b890' },
+    { tag:'AFASTAR', text:'"Não tô bem pra conversa agora, Mary."', next:'ellie_afasta_mary', accent:'#40a8b8' },
+  ],
+  sw:['Ellie','Mary','Stephany'],
+},
+
+mary_segredo_ellie: {
+  pov:'Ellie', loc:'Biblioteca',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">Eu preciso te contar uma coisa antes que a Stephany conte a versão dela.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">Essa noite... eu e ela. De novo. E dessa vez foi diferente. Foi de verdade. Mas ela ficou estranha de manhã. Saiu antes de eu acordar. Não respondeu as mensagens.</div>
+    </div>
+    <p class="narr">A <span class="cMary">Mary</span> parece genuinamente perdida — não dramática, só confusa. Como alguém que se jogou em algo real e ainda não sabe se o chão vai estar lá embaixo.</p>
+  `,
+  choices:[
+    { tag:'MEDIAR', text:'"Eu sei onde a Stephany está. Vou falar com ela."', next:'ellie_busca_ste', accent:'#a060d0', flag:{ellie_mediou_sty_mary:true} },
+    { tag:'OUVIR', text:'"Conta tudo. O que foi diferente?"', next:'mary_conta_ste_noite', accent:'#50b890' },
+    { tag:'MUDAR', text:'Ver a perspectiva da Stephany sobre essa manhã', next:'ste_manha_sozinha', accent:'#a060d0' },
+  ],
+  sw:['Ellie','Mary','Stephany'],
+},
+
+// ─── STEPHANY + MARY ────────────────────────────
+ste_mary_manha_pov: {
+  pov:'Stephany', loc:'Quarto dela — manhã cedo',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cSte">Stephany</span> está sentada na beirada da cama, as mãos nos joelhos, olhando pro quarto vazio.</p>
+    <p class="narr">A <span class="cMary">Mary</span> ainda estava dormindo no lado dela. Deveria ter ido embora antes. Mas as três da manhã têm uma lógica própria e <span class="cSte">Stephany</span> ficou.</p>
+    <p class="narr">Ela olha pro rosto da <span class="cMary">Mary</span> dormindo. Aquele aperto no peito que ela não sabe nomear está de volta.</p>
+    <p class="narr"><i>Isso vai complicar tudo</i>, ela pensa. E sai do quarto antes que a Mary acorde.</p>
+  `,
+  choices:[
+    { tag:'FLASHBACK', text:'O que aconteceu essa noite?', next:'ste_mary_noite_flashback', accent:'#a060d0' },
+    { tag:'PRESENTE', text:'Ir direto pro presente — Stephany fugindo de manhã', next:'ste_manha_sozinha', accent:'#7a6a70' },
+  ],
+  sw:['Stephany','Mary','Ellie'],
+},
+
+ste_mary_noite_flashback: {
+  pov:'Stephany', loc:'Quarto da Stephany — madrugada anterior',
+  heat:4,
+  narr:`
+    <p class="narr hot">Era perto de meia-noite quando a <span class="cMary">Mary</span> bateu de novo. <span class="cSte">Stephany</span> sabia que ia abrir a porta — sabia desde que ouviu os passos no corredor.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">Eu não consigo parar de pensar em você. Eu tentei. Não tô conseguindo.</div>
+    </div>
+    <p class="narr hot"><span class="cSte">Stephany</span> foi até ela. Sem estratégia, sem calcular. Só foi.</p>
+    <p class="narr hot">O beijo foi diferente dos outros — menos tentativo, mais declarado. As mãos da <span class="cMary">Mary</span> foram pra cintura da Stephany com uma segurança que a surpreendeu; ela sempre parecia nova demais, insegura demais. Não essa noite.</p>
+    <p class="narr hot">Elas foram pra cama com a naturalidade de quem já fez isso mil vezes, e com a eletricidade de quem está fazendo pela primeira vez que importa. <span class="cSte">Stephany</span> aprendeu o ritmo da <span class="cMary">Mary</span> devagar — o que a fazia prender a respiração, onde a pressão certa criava o som certo, como era segurar aqueles ombros enquanto o mundo lá fora parava de existir.</p>
+    <p class="narr hot">De madrugada, a <span class="cMary">Mary</span> ficou enrolada no peito dela.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text"><i>(meio dormindo)</i> Você é assustadora, sabe? — <i>Por quê?</i> — Porque você me faz querer ficar.</div>
+    </div>
+    <p class="narr"><span class="cSte">Stephany</span> não respondeu. Ficou acordada por mais uma hora sentindo o peso disso.</p>
+  `,
+  choices:[
+    { tag:'PRESENTE', text:'Stephany fugindo de manhã', next:'ste_manha_sozinha', accent:'#a060d0' },
+    { tag:'MUDAR', text:'Sentir isso pela perspectiva da Mary', next:'mary_acorda_sozinha', accent:'#50b890' },
+  ],
+  sw:['Stephany','Mary','Ellie'],
+},
+
+mary_acorda_sozinha: {
+  pov:'Mary', loc:'Quarto da Stephany — manhã',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cMary">Mary</span> acorda estendendo o braço pro lado dela. Vazio.</p>
+    <p class="narr">Ela fica deitada por um momento, olhando pro teto. Sente o cheiro do perfume da Stephany no travesseiro.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text"><i>(em voz alta, pra ninguém)</i> Não. Assim não.</div>
+    </div>
+    <div class="aside-block"><span class="aside-icon">📱</span><span>Mary → Stephany: <i>"Por que você foi embora?"</i> — enviado. Duas marcas cinzas.</span></div>
+    <div class="aside-block"><span class="aside-icon">📱</span><span>Mary → Stephany: <i>"Ste."</i> — enviado. Duas marcas cinzas.</span></div>
+  `,
+  choices:[
+    { tag:'CONFRONTAR', text:'Ir atrás dela agora — não vai deixar isso se repetir', next:'mary_procura_ste', accent:'#50b890', flag:{mary_foi_atras:true} },
+    { tag:'ESPERAR', text:'Dar espaço. Ver se ela volta.', next:'ellie_biblioteca_sozinha', accent:'#7a6a70' },
+  ],
+  sw:['Mary','Stephany','Ellie'],
+},
+
+mary_procura_ste: {
+  pov:'Mary', loc:'Mansão — procurando',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cMary">Mary</span> percorre a mansão. Cozinha — não tem. Sala — não tem. Jardim — não tem.</p>
+    <p class="narr">Ela para na frente da biblioteca. Abre a porta.</p>
+    <p class="narr">A <span class="cSte">Stephany</span> está numa poltrona com um livro no colo que ela claramente não está lendo. Levanta os olhos quando Mary entra.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">Mary—</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">Não. Você não vai fazer isso. Não vai passar a manhã me ignorando e fingir que foi uma coisa sem importância.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ABRIR', text:'Stephany fecha o livro. "Senta."', next:'ste_mary_conversa_real', accent:'#a060d0', flag:{ste_mary_conv:true} },
+    { tag:'HONESTA', text:'Stephany se levanta. "Não é sem importância. É o problema."', next:'ste_explica_medo', accent:'#50b890' },
+  ],
+  sw:['Mary','Stephany','Ellie'],
+},
+
+ste_explica_medo: {
+  pov:'Stephany', loc:'Biblioteca',
+  heat:1,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">Eu fui embora porque tô com medo, Mary. Não de você. De quanto eu me importo.</div>
+    </div>
+    <p class="narr">A <span class="cMary">Mary</span> para. Esse ela não estava esperando.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">Eu passo a vida inteira sendo a que cuida de todo mundo aqui. Ouço o problema de todo mundo, fico do lado, não preciso de nada. Funciona. É seguro. E aí você chegou. E eu não sei ser isso com você. Com você eu só quero.</div>
+    </div>
+    <p class="narr">Silêncio.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text"><i>(devagar)</i> Ste. Querer não é fraqueza.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'CEDER', text:'"Eu sei." — e isso já é o mundo.', next:'ste_mary_se_aproximam', accent:'#a060d0' },
+    { tag:'DURO', text:'"Pra mim é. Sempre foi."', next:'ste_mary_conversa_real', accent:'#50b890' },
+  ],
+  sw:['Stephany','Mary','Ellie'],
+},
+
+ste_mary_se_aproximam: {
+  pov:'Stephany', loc:'Biblioteca',
+  heat:3,
+  narr:`
+    <p class="narr hot">A <span class="cMary">Mary</span> se aproxima devagar. Fica na frente da <span class="cSte">Stephany</span> e coloca as duas mãos no rosto dela — um gesto simples, direto, sem rodeio.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">Então fica com medo. Fica com medo e fica comigo de qualquer jeito.</div>
+    </div>
+    <p class="narr hot"><span class="cSte">Stephany</span> fecha os olhos. Quando abre, a Mary ainda está ali, esperando sem exigir. Ela é a que puxa dessa vez.</p>
+    <p class="narr hot">O beijo é mais urgente do que a noite anterior — menos exploratório, mais declarado. A Mary ri de surpresa antes de se render completamente, e esse som — leve, genuíno — desfaz o último nó da resistência da Stephany.</p>
+    <p class="narr hot">Elas acabam no sofá da biblioteca, enroladas num ângulo improvisado, e <span class="cSte">Stephany</span> percebe que está sorrindo — coisa rara em momentos assim, sempre tão no controle. Com a <span class="cMary">Mary</span>, o controle vai por água abaixo, e é a melhor coisa do mundo.</p>
+    <div class="aside-block"><span class="aside-icon">🚪</span><span>A porta da biblioteca se abre. <b class="cEllie">Ellie</b> para no vão. Olha. Fecha a porta imediatamente.</span></div>
+    <div class="aside-block"><span class="aside-icon">🌻</span><span>No corredor, <b class="cPoll">Pollyana</b> sorri para a Ellie: <i>"Disse que ia dar certo."</i></span></div>
+  `,
+  choices:[
+    { tag:'DEPOIS', text:'A relação se firma — próximo passo', next:'ste_mary_real_agora', accent:'#50b890', flag:{ste_mary_oficial:true} },
+    { tag:'MUDAR', text:'A Ellie que acabou de ver tudo isso', next:'ellie_viu_biblioteca', accent:'#40a8b8' },
+  ],
+  sw:['Stephany','Mary','Ellie','Pollyana'],
+},
+
+ellie_viu_biblioteca: {
+  pov:'Ellie', loc:'Corredor da biblioteca',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEllie">Ellie</span> encosta na parede do corredor e respira fundo. Depois sorri — um sorriso pequeno, genuíno.</p>
+    <p class="narr">Elas ficaram bem. A <span class="cSte">Stephany</span> finalmente está deixando alguém chegar perto. Isso é bom. Isso é real.</p>
+    <p class="narr">E então o sorriso some um pouco, porque Ellie pensa na <span class="cMel">Mel</span>, e no quarto da <span class="cJoy">Joy</span>, e no jeito que as coisas funcionam — alguém sempre fica de fora.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(aparecendo ao lado)</i> Eu disse que ia dar certo pra elas.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Você sabe de tudo antes de todo mundo.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Eu só olho devagar. Todo mundo olha rápido.</div>
+    </div>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b class="cMel">Mel</b>: <i>"Ellie. Você tem um minuto?"</i></span></div>
+  `,
+  choices:[
+    { tag:'RESPONDER', text:'Responder: "Tenho. Cadê você?"', next:'ellie_mel_confronto_real', accent:'#d07090', flag:{ellie_respondeu_mel:true} },
+    { tag:'SILÊNCIO', text:'Não responder. Não agora.', next:'ellie_nao_responde_mel', accent:'#40a8b8' },
+  ],
+  sw:['Ellie','Mel','Stephany','Pollyana'],
+},
+
+// ─── POLLYANA — POV PRINCIPAL ────────────────────
+pollyana_manhã_jardim: {
+  pov:'Pollyana', loc:'Jardim — manhã',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cPoll">Pollyana</span> está sentada na pedra do jardim com um copo de chá morno quando a mansão começa a acordar.</p>
+    <p class="narr">Ela vê o <span class="cEros">Eros</span> passar pela janela do escritório. Vê a <span class="cSte">Stephany</span> sair do quarto da Mary de mansinho. Vê a <span class="cJoy">Joy</span> ir pra piscina. Conta tudo. É o que ela sempre faz.</p>
+    <p class="narr">A <span class="cPoll">Pollyana</span> é o tipo de pessoa que as outras esqueceram de perceber que está ali — não porque é invisível, mas porque é segura. Segura como uma parede. E as paredes não reclamam quando você se apoia nelas.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(para si mesma)</i> Hoje vai ter fogo. Vai ter. É pra isso que essa semana existe.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'OBSERVAR', text:'Ficar no jardim — deixar a mansão vir até ela', next:'mel_jardim_pollyana', accent:'#e07050' },
+    { tag:'AGIR', text:'Ir até o Carluz — ele está quieto demais', next:'poll_carluz_manha', accent:'#c8a840' },
+    { tag:'SENTIR', text:'Ir até a Joy — aquele beijo de anos atrás ainda pesa', next:'poll_joy_historia', accent:'#e08060' },
+  ],
+  sw:['Pollyana','Carluz','Joy','Mel'],
+},
+
+mel_jardim_pollyana: {
+  pov:'Mel', loc:'Jardim',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> encontra a <span class="cPoll">Pollyana</span> exatamente onde a mensagem dizia — sentada na pedra, olhando pro céu como se estivesse calculando algo.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Você dormiu?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Um pouco. Suficiente. Você?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Não muito.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(sem julgamento)</i> Você vai falar com ela.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Não é pergunta.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Não é pergunta. Eu só... Mel. Você merece alguém que saiba o que quer. A Joy sabe o que quer. A Ellie também sabe. A questão é o que <i>você</i> quer.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'CERTEZA', text:'"Eu sei o que eu quero."', next:'mel_piscina_joy', accent:'#e08060', flag:{mel_decidida:true} },
+    { tag:'DÚVIDA', text:'"Eu não sei. E isso me assusta."', next:'mel_poll_incerteza', accent:'#e07050' },
+    { tag:'QUESTIONAR', text:'"Você sabe de coisas sobre a Joy que eu não sei?"', next:'mel_pergunta_poll_joy', accent:'#d07090' },
+  ],
+  sw:['Mel','Pollyana','Joy'],
+},
+
+mel_poll_incerteza: {
+  pov:'Mel', loc:'Jardim',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cPoll">Pollyana</span> assente devagar.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Isso é honesto. Não precisa saber antes de ir. Só precisa ser honesta com ela sobre isso. A dúvida não é o problema — fingir que não existe é.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Como você consegue ser tão... clara sobre as coisas dos outros?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(breve pausa)</i> Porque eu aprendi a ser clarinha com os outros antes de aprender a ser com eu mesma. Que é um jeito muito errado de fazer isso.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'EMPURRAR', text:'"O que você quer, Poll?"', next:'poll_o_que_quer', accent:'#e07050', flag:{mel_perguntou_poll:true} },
+    { tag:'GRATIDÃO', text:'Agradecer. Ir até a Joy.', next:'mel_piscina_joy', accent:'#e08060' },
+  ],
+  sw:['Mel','Pollyana'],
+},
+
+poll_o_que_quer: {
+  pov:'Pollyana', loc:'Jardim',
+  heat:0,
+  narr:`
+    <p class="narr">A pergunta da <span class="cMel">Mel</span> pega a <span class="cPoll">Pollyana</span> desprevenida — que é raro. Ela costuma estar preparada pra tudo.</p>
+    <p class="narr">A verdade é que ninguém pergunta isso pra ela normalmente. Ela é a que pergunta.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(devagar)</i> Eu quero... que essa semana acabe sem que a gente perca ninguém de vez. Que todo mundo saia inteiro o suficiente pra reconstruir.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">E você? Não você o grupo. Você.</div>
+    </div>
+    <p class="narr"><span class="cPoll">Pollyana</span> fica quieta por um momento longo.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Eu quero parar de ser a que fica bem enquanto todo mundo desmorona. Uma vez. Só uma.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ESPELHO', text:'Mel abraça ela. "Você pode. Comigo."', next:'poll_se_permite', accent:'#d07090', flag:{poll_se_abriu:true} },
+    { tag:'RESPEITO', text:'Assentir. Deixar a resposta pousar.', next:'mel_piscina_joy', accent:'#e07050' },
+  ],
+  sw:['Pollyana','Mel'],
+},
+
+poll_se_permite: {
+  pov:'Pollyana', loc:'Jardim',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cPoll">Pollyana</span> aceita o abraço da <span class="cMel">Mel</span> sem recuar pela primeira vez em muito tempo.</p>
+    <p class="narr">Não chora. Não é o tipo. Mas fica ali por um segundo que parece mais longo do que é.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(baixinho)</i> Vai lá, Mel. Você tem uma conversa pra ter.</div>
+    </div>
+    <p class="narr">E a <span class="cMel">Mel</span> vai.</p>
+  `,
+  choices:[
+    { tag:'SEGUIR', text:'[Mel] Ir até a piscina — Joy espera', next:'mel_piscina_joy', accent:'#e08060' },
+    { tag:'FICAR', text:'[Pollyana] Ficar no jardim — ver o que o Carluz está fazendo', next:'poll_carluz_manha', accent:'#c8a840' },
+  ],
+  sw:['Pollyana','Mel','Carluz'],
+},
+
+mel_pergunta_poll_joy: {
+  pov:'Mel', loc:'Jardim',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cPoll">Pollyana</span> hesita — coisa rara.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">A Joy e eu... a gente teve uma coisa. Faz tempo. Antes de você.</div>
+    </div>
+    <p class="narr"><span class="cMel">Mel</span> para.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Foi pequeno. Foi real enquanto durou. Ela não te contou porque não era importante — não pra ela. Pra mim, foi. Mas eu não tô te contando isso pra te afastar dela.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Então pra quê?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Pra você saber que eu conheço ela de verdade. E mesmo assim eu digo: vai. Ela aprendeu alguma coisa que eu não vi nela antes. Você fez isso.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'IR', text:'Ir até a piscina.', next:'mel_piscina_joy', accent:'#e08060', flag:{mel_soube_poll_joy:true} },
+    { tag:'PROCESSAR', text:'"Você ainda sente alguma coisa por ela?"', next:'poll_sobre_joy_agora', accent:'#e07050' },
+  ],
+  sw:['Mel','Pollyana','Joy'],
+},
+
+poll_sobre_joy_agora: {
+  pov:'Pollyana', loc:'Jardim',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(sem hesitar)</i> Carinho. Não amor. É diferente. E você pode confiar nessa diferença.</div>
+    </div>
+    <p class="narr">A <span class="cMel">Mel</span> a olha por um segundo. Assente.</p>
+    <p class="narr">Vai.</p>
+  `,
+  choices:[
+    { tag:'CONTINUAR', text:'[Mel] Piscina — encarar a Joy', next:'mel_piscina_joy', accent:'#e08060' },
+  ],
+  sw:['Mel','Pollyana'],
+},
+
+// ─── POLLYANA + CARLUZ ───────────────────────────
+poll_carluz_manha: {
+  pov:'Pollyana', loc:'Escritório — cedo',
+  heat:0,
+  narr:`
+    <p class="narr">O <span class="cCarluz">Carluz</span> está sentado na beira da escrivaninha com cara de quem não dormiu. A <span class="cPoll">Pollyana</span> entra sem bater — privilégio de quinze anos de amizade.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Você nem fingiu que tá bem essa manhã. Boa evolução.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text"><i>(sem sorrir)</i> Cansa fingir.</div>
+    </div>
+    <p class="narr"><span class="cPoll">Pollyana</span> puxa uma cadeira e senta de frente pra ele.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Então para de fingir. Aqui, comigo, agora. Me conta o que tá pesando.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ABRIR', text:'Carluz conta sobre a Lara e o Eros', next:'carluz_conta_poll_tudo', accent:'#c8a840', flag:{carluz_abriu_poll:true} },
+    { tag:'MUDAR', text:'[Mudar] Ver o que o Eros está carregando', next:'eros_segredo_pov', accent:'#d09830' },
+  ],
+  sw:['Pollyana','Carluz','Eros'],
+},
+
+carluz_conta_poll_tudo: {
+  pov:'Carluz', loc:'Escritório',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cCarluz">Carluz</span> conta tudo pra <span class="cPoll">Pollyana</span> — a Lara, as mensagens, o <span class="cEros">Eros</span> que viu sem querer, a conversa que não aconteceu.</p>
+    <p class="narr">A Pollyana ouve. Não interrompe. Não faz cara de preocupada — faz cara de presente, que é diferente.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">O que você quer que aconteça?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text">Eu quero que a gente consiga falar sem isso virar uma bomba.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Então começa pela verdade. Vai até ele hoje. Antes que a mansão consiga criar mais versões do que aconteceu.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'CORAJOSO', text:'Carluz vai falar com o Eros agora', next:'eros_carluz_tensao_nova', accent:'#d09830', flag:{carluz_decidiu:true} },
+    { tag:'PAUSAR', text:'"Preciso de mais tempo, Poll."', next:'poll_da_tempo_carluz', accent:'#e07050' },
+  ],
+  sw:['Carluz','Pollyana','Eros'],
+},
+
+poll_da_tempo_carluz: {
+  pov:'Pollyana', loc:'Escritório',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Tempo você tem. Mas não demais — a mansão acaba amanhã. Depois disso, a coisa fica no ar e o ar guarda mal.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text">Como você faz isso? Falar a verdade sem machucar?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Eu machuco, Carluz. Só faço de conta que foi com cuidado suficiente.</div>
+    </div>
+    <p class="narr">Ele ri. Pequeno. Mas ri.</p>
+  `,
+  choices:[
+    { tag:'IR', text:'Carluz vai falar com o Eros', next:'eros_carluz_tensao_nova', accent:'#d09830' },
+    { tag:'MUDAR', text:'Ver o que Eros está escondendo', next:'eros_segredo_pov', accent:'#d09830' },
+  ],
+  sw:['Carluz','Pollyana','Eros'],
+},
+
+poll_joy_historia: {
+  pov:'Pollyana', loc:'Beira da piscina',
+  heat:0,
+  narr:`
+    <p class="narr">A <span class="cPoll">Pollyana</span> vai até a piscina antes da <span class="cMel">Mel</span>. A <span class="cJoy">Joy</span> a vê chegando e não faz cerimônia.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Você veio me dar sermão.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Vim te avisar. Tem diferença.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Avisa então.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Se você machucar a Mel de novo, não vai ser só ela que vai ter problema com você. Vai ser eu. E você sabe que eu não esqueço.</div>
+    </div>
+    <p class="narr">A <span class="cJoy">Joy</span> a olha por um segundo. Algo no rosto dela afrouxa.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text"><i>(baixinha)</i> Eu sei, Poll. Eu sei.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'PERDOAR', text:'"Então vai lá. E faz certo dessa vez."', next:'pollyana_manhã_jardim', accent:'#e07050', flag:{poll_avisou_joy:true} },
+    { tag:'MAIS', text:'"Por que você foi embora antes, de nós duas?"', next:'poll_joy_passado', accent:'#e07050' },
+  ],
+  sw:['Pollyana','Joy','Mel'],
+},
+
+poll_joy_passado: {
+  pov:'Pollyana', loc:'Beira da piscina',
+  heat:0,
+  narr:`
+    <p class="narr">A <span class="cJoy">Joy</span> tira os óculos. Olha pra <span class="cPoll">Pollyana</span> de verdade.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Porque você me via demais. E eu não tava pronta pra ser vista assim.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">E agora?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Agora tô tentando aprender a ficar quieta enquanto alguém olha. É mais difícil do que parece.</div>
+    </div>
+    <p class="narr"><span class="cPoll">Pollyana</span> assente. Não com pena — com reconhecimento.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text">Aprende, então. A Mel merece alguém que consegue ficar quieta enquanto é vista.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'CONTINUAR', text:'[Mudar] Seguir agora com a Mel na piscina', next:'mel_piscina_joy', accent:'#d07090' },
+    { tag:'FICAR', text:'[Pollyana] Ver o que acontece quando Carluz encontra o Eros', next:'poll_carluz_manha', accent:'#c8a840' },
+  ],
+  sw:['Pollyana','Joy','Mel'],
+},
+
+// ─── EROS + CARLUZ ───────────────────────────────
+eros_segredo_pov: {
+  pov:'Eros', loc:'Escritório da mansão',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEros">Eros</span> fecha a porta do escritório e fica com as mãos no batente por um segundo. Merda.</p>
+    <p class="narr">Ele não devia ter dito nada pra <span class="cJoy">Joy</span>. Mas era isso ou carregar sozinho — e carregar sozinho estava virando uma coisa física.</p>
+    <p class="narr">O segredo: há três semanas, antes de todo mundo chegar, ele pegou o celular errado no escuro. E leu o suficiente pra saber que a <span class="cCarluz">Carluz</span> está conversando com alguém — alguém que ele não conhece. Regularmente.</p>
+    <p class="narr">Pode ser nada. Pode ser amizade. Mas o jeito que ela escreve — leve, risonha, completamente diferente dos últimos meses com ele — ficou na cabeça como um espinho.</p>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b class="cCarluz">Carluz</b>: <i>"Oi amor. Tô no quarto. Vem?"</i></span></div>
+  `,
+  choices:[
+    { tag:'FINGIR', text:'Ir até a Carluz e fingir que está tudo bem', next:'eros_carluz_tensao_nova', accent:'#7a6a70' },
+    { tag:'HONESTO', text:'Ir até a Carluz e contar o que viu', next:'eros_conta_carluz_tudo', accent:'#c8a840', flag:{eros_foi_honesto:true} },
+    { tag:'ENTENDER', text:'Ver o que Carluz realmente está fazendo', next:'carluz_conversa_secreta', accent:'#c8a840' },
+  ],
+  sw:['Eros','Carluz'],
+},
+
+carluz_conversa_secreta: {
+  pov:'Carluz', loc:'Quarto do casal',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cCarluz">Carluz</span> está deitado de barriga pro teto, celular na mão, sorrindo levemente pro que está lendo.</p>
+    <p class="narr">A conversa é com a <b>Lara</b> — uma amiga de antes, de antes de tudo isso, que entrou em contato mês passado. Elas foram próximas. Muito próximas, em outro tempo.</p>
+    <p class="narr">Não é nada. Não está sendo nada. Mas tem algo reconfortante em conversar com alguém que não está preso nessa dinâmica da mansão, que o conhece como o Carluz de antes — menos ansioso, menos ciumento.</p>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b>Lara</b>: <i>"Você tá diferente ultimamente. Mais leve. O que aconteceu?"</i></span></div>
+    <p class="narr"><span class="cCarluz">Carluz</span> começa a responder e para. Olha pro teto. A porta se abre. <span class="cEros">Eros</span>.</p>
+  `,
+  choices:[
+    { tag:'FECHAR', text:'[Carluz] Fechar o celular. "Oi."', next:'eros_carluz_tensao_nova', accent:'#7a6a70' },
+    { tag:'ABRIR', text:'[Carluz] Mostrar o celular. "Tô falando com a Lara."', next:'carluz_mostra_eros', accent:'#c8a840', flag:{carluz_abriu_seg:true} },
+    { tag:'MUDAR', text:'[Eros] Ver a cena pelo ponto de vista dele', next:'eros_entra_quarto_carluz', accent:'#d09830' },
+  ],
+  sw:['Carluz','Eros'],
+},
+
+eros_entra_quarto_carluz: {
+  pov:'Eros', loc:'Quarto do casal',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cEros">Eros</span> entra. A <span class="cCarluz">Carluz</span> está no celular — e tem um sorriso levinho, o tipo que some quando ele levanta os olhos.</p>
+    <p class="narr">Ele sente aquela pontada. Reconhece.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">Com quem você tá falando?</div>
+    </div>
+    <p class="narr">A pergunta saiu mais seca do que ele queria.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text">Com uma amiga.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'DIRETO', text:'Carluz responde: "A Lara." Direto.', next:'carluz_mostra_eros', accent:'#c8a840' },
+    { tag:'BRIGA', text:'Carluz: "Você tá me interrogando?"', next:'eros_carluz_briga_ciumenta', accent:'#7a6a70' },
+  ],
+  sw:['Eros','Carluz'],
+},
+
+carluz_mostra_eros: {
+  pov:'Carluz', loc:'Quarto do casal',
+  heat:1,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text">Lara. Uma amiga de antes. A gente voltou a se falar mês passado.</div>
+    </div>
+    <p class="narr">Ele estende o celular. <span class="cEros">Eros</span> não pega, mas olha.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text"><i>(baixo)</i> Você me garante?</div>
+    </div>
+    <p class="narr">A pergunta é honesta demais e dói por isso. <span class="cCarluz">Carluz</span> olha pra ele — a tensão nos ombros, nos olhos, de quem está segurando algo há tempo.</p>
+  `,
+  choices:[
+    { tag:'GARANTIR', text:'"Eu te garanto. Mas você precisa me contar o que tá carregando."', next:'eros_conta_carluz_tudo', accent:'#d09830', flag:{carluz_perguntou:true} },
+    { tag:'HONESTO', text:'"Não sei." Ser honesta sobre a ambiguidade.', next:'carluz_honesta_ambiguidade', accent:'#c8a840' },
+  ],
+  sw:['Carluz','Eros'],
+},
+
+carluz_honesta_ambiguidade: {
+  pov:'Carluz', loc:'Quarto do casal',
+  heat:1,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text">Eu não sei, Eros. Falar com ela me faz sentir como eu era antes de ser tão ansioso, tão ciumento. Eu não sei o que isso significa exatamente.</div>
+    </div>
+    <p class="narr">Silêncio longo.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">Você sente alguma coisa por ela?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text">Eu não sei.</div>
+    </div>
+    <p class="narr"><span class="cEros">Eros</span> senta na beirada da cama. Não saiu. Isso significa alguma coisa.</p>
+  `,
+  choices:[
+    { tag:'CONVERSA', text:'Conversar. Os dois. De verdade.', next:'eros_carluz_conversa_honesta', accent:'#d09830', flag:{eros_carluz_virada:true} },
+    { tag:'FINAL', text:'O relacionamento chega em um cruzamento', next:'ending_eros_carluz_decisao', accent:'#7a6a70' },
+  ],
+  sw:['Carluz','Eros'],
+},
+
+eros_carluz_briga_ciumenta: {
+  pov:'Eros', loc:'Quarto do casal',
+  heat:1,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">Eu vi as mensagens, Carluz. Semanas atrás. Por acidente.</div>
+    </div>
+    <p class="narr">Silêncio absoluto.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text">Você viu minhas mensagens. Mas ficou lendo. E contou pra Joy antes de contar pra mim.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">Porque eu tava com medo de perder você.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'VERDADE', text:'Eros: "Eu tava com medo de perder você."', next:'eros_conta_carluz_tudo', accent:'#d09830' },
+    { tag:'AR', text:'Carluz sai do quarto — precisa de ar', next:'carluz_sai_briga', accent:'#c8a840' },
+  ],
+  sw:['Eros','Carluz','Joy'],
+},
+
+eros_conta_carluz_tudo: {
+  pov:'Eros', loc:'Quarto do casal',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEros">Eros</span> senta na beirada da cama. Olha pra <span class="cCarluz">Carluz</span>.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">Eu vi as mensagens. Por acidente — peguei o celular errado. E fiquei com isso porque qualquer jeito que eu falasse ia parecer que eu tava te acusando. E eu não queria fazer isso.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">Fiquei com ciúme. Não de traição. De você sendo leve com outra pessoa de um jeito que a gente não tava sendo um com o outro. Isso doeu mais.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text">Por que você foi pra varanda com a Mary?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">Porque eu tava procurando qualquer coisa que me fizesse sentir menos sozinho no relacionamento. Foi errado. Eu sei.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'RECONHECER', text:'"Você não me disse. Eu não te disse. A gente falhou nos dois lados."', next:'eros_carluz_conversa_honesta', accent:'#c8a840' },
+    { tag:'FINAL', text:'Esse é o momento de virada deles', next:'ending_eros_carluz_rebuild', accent:'#d09830' },
+  ],
+  sw:['Carluz','Eros'],
+},
+
+eros_carluz_conversa_honesta: {
+  pov:'Carluz', loc:'Quarto — tarde da noite',
+  heat:0,
+  narr:`
+    <p class="narr">Eles ficam acordados até tarde. Não brigando — conversando. Do tipo de conversa que a <span class="cCarluz">Carluz</span> achava que eles tinham parado de ter.</p>
+    <p class="narr">Ele conta sobre a Lara — não como segredo, mas como algo que virou segredo sem querer. O <span class="cEros">Eros</span> conta sobre a varanda, sobre a Mary, sobre o medo de dizer que estava com medo.</p>
+    <p class="narr">Não resolve tudo. Não é pra resolver tudo numa noite. Mas é a primeira conversa honesta em meses.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text"><i>(tarde, já deitados)</i> A gente virou isso. Uma casa cheia de gente que a gente ama e não conseguia mais falar um com o outro.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">A gente era melhor do que isso. — A gente pode ser de novo.</div>
+    </div>
+    <div class="aside-block"><span class="aside-icon">🌻</span><span><b class="cPoll">Pollyana</b> passa pelo corredor, vê a luz do quarto ainda acesa às 2h. Sorri. Continua andando.</span></div>
+  `,
+  choices:[
+    { tag:'FINAL', text:'O caminho de volta começa aqui', next:'ending_eros_carluz_rebuild', accent:'#d09830' },
+    { tag:'CONTINUAR', text:'O que acontece com todo mundo no último dia', next:'ultimo_dia_mansao', accent:'#c8a840' },
+  ],
+  sw:['Carluz','Eros'],
+},
+
+// ─── CENAS AUXILIARES ────────────────────────────
+mel_cozinha_ellie: {
+  pov:'Mel', loc:'Cozinha',
+  heat:0,
+  narr:`
+    <p class="narr">A <span class="cEllie">Ellie</span> está com duas xícaras prontas quando <span class="cMel">Mel</span> entra. Como se soubesse. Sempre sabe.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Você devia trabalhar na CIA.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Eu só ouço as pessoas. É mais fácil do que parece.</div>
+    </div>
+    <p class="narr">Elas sentam em silêncio por um tempo. Bom silêncio.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Você vai até ela hoje.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Não é pergunta.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Não é pergunta.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'PRIMEIRO', text:'"Sim. Mas eu queria te ver primeiro."', next:'mel_ellie_conversa_antes', accent:'#40a8b8', flag:{mel_viu_ellie_primeiro:true} },
+    { tag:'IR', text:'Ir até a piscina depois do café', next:'mel_piscina_joy', accent:'#e08060' },
+  ],
+  sw:['Mel','Ellie'],
+},
+
+mel_ellie_conversa_antes: {
+  pov:'Mel', loc:'Cozinha',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Eu tô bem, Mel. Você não precisa ficar me checando.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Eu sei que você tá bem. Eu queria ver você porque eu queria. Não é sobre o que você sente por mim.</div>
+    </div>
+    <p class="narr">Pausa. A <span class="cEllie">Ellie</span> olha pro café.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Tá bom.</div>
+    </div>
+    <p class="narr">E elas ficam assim — a cozinha, o café, o sol da manhã. Uma amizade que sobreviveu a uma confissão difícil.</p>
+  `,
+  choices:[
+    { tag:'IR', text:'Ir até a piscina depois', next:'mel_piscina_joy', accent:'#e08060' },
+  ],
+  sw:['Mel','Ellie'],
+},
+
+mel_quarto_observa: {
+  pov:'Mel', loc:'Quarto',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> fica à janela, vendo a mansão acordar. O <span class="cEros">Eros</span> no jardim. A <span class="cCarluz">Carluz</span> na cozinha. A <span class="cSte">Stephany</span> saindo do quarto de mansinho. A <span class="cPoll">Pollyana</span> sentada na pedra do jardim com chá.</p>
+    <p class="narr">A <span class="cJoy">Joy</span> aparece na beira da piscina com café. Olha pra janela do quarto da Mel como se soubesse que ela está ali.</p>
+    <div class="aside-block"><span class="aside-icon">📱</span><span><b class="cJoy">Joy</b> acena levemente do lado de fora.</span></div>
+  `,
+  choices:[
+    { tag:'IR', text:'Ir até ela', next:'mel_piscina_joy', accent:'#e08060', flag:{mel_foi_piscina:true} },
+    { tag:'MUDAR', text:'Ver o que está acontecendo com Stephany', next:'ste_manha_sozinha', accent:'#a060d0' },
+  ],
+  sw:['Mel','Joy','Stephany'],
+},
+
+ste_manha_sozinha: {
+  pov:'Stephany', loc:'Corredor',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cSte">Stephany</span> anda pelo corredor tentando parecer que está indo a algum lugar. Não está. Tá fugindo.</p>
+    <p class="narr">A mensagem da <span class="cMary">Mary</span> está no celular — duas linhas curtas, sem drama, que pesam mais por isso.</p>
+    <p class="narr">A <span class="cEllie">Ellie</span> aparece do fim do corredor.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Você sabe que correr não funciona com ela, né?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">Eu não tô correndo.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Você tá no corredor às 7h sem destino depois de ter saído do quarto dela antes de ela acordar.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ADMITIR', text:'"Tô com medo." Admitir pra Ellie.', next:'ste_admite_medo_ellie', accent:'#a060d0', flag:{ste_admitiu:true} },
+    { tag:'VOLTAR', text:'Voltar pro quarto da Mary', next:'mary_procura_ste', accent:'#50b890', flag:{ste_voltou:true} },
+  ],
+  sw:['Stephany','Ellie','Mary'],
+},
+
+ste_admite_medo_ellie: {
+  pov:'Stephany', loc:'Corredor',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">Eu não sei como ser isso. O que tô sentindo por ela — não sei como carregar sem estragar.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Ninguém sabe. Todo mundo aprende errando.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">E se eu errar e perder ela?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Você já tá perdendo ela ao correr. Pelo menos corre em direção.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'IR', text:'Voltar pro quarto da Mary', next:'mary_procura_ste', accent:'#50b890' },
+  ],
+  sw:['Stephany','Ellie','Mary'],
+},
+
+ste_mary_conversa_real: {
+  pov:'Stephany', loc:'Biblioteca',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cSte">Stephany</span> fecha o livro. Dá espaço no sofá.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">Eu fui embora porque fiquei com medo. Não porque não quero isso. Me ensina então.</div>
+    </div>
+    <p class="narr">A <span class="cMary">Mary</span> para. Depois sorri.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">Você acabou de fazer a parte mais difícil. Pedir.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'SEGUIR', text:'Mary vai ensinar', next:'ste_mary_se_aproximam', accent:'#50b890' },
+  ],
+  sw:['Stephany','Mary'],
+},
+
+ellie_mel_confronto_real: {
+  pov:'Ellie', loc:'Varanda do fundo',
+  heat:1,
+  narr:`
+    <p class="narr">Elas se encontram na varanda. A <span class="cMel">Mel</span> parece consciente. Ela sabe o que a Ellie viu pela janela da cozinha.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Eu precisava que você soubesse — eu e a Joy. Tá acontecendo.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Eu sei. — <i>E você?</i> — Eu o quê? — Ellie. Você me disse que sente algo. Eu não esqueci.</div>
+    </div>
+    <p class="narr">Silêncio. A <span class="cEllie">Ellie</span> olha pro jardim.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Eu ainda sinto. Mas isso não é problema seu resolver. É meu.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'HONESTA', text:'Mel: "Isso não é justo pra você."', next:'mel_tenta_ellie', accent:'#40a8b8' },
+    { tag:'CUIDADO', text:'Mel: "Eu não quero te machucar."', next:'mel_preocupa_ellie', accent:'#d07090' },
+    { tag:'MUDAR', text:'Sentir essa cena como a Ellie', next:'ellie_varanda_por_dentro', accent:'#40a8b8' },
+  ],
+  sw:['Ellie','Mel'],
+},
+
+ellie_varanda_por_dentro: {
+  pov:'Ellie', loc:'Varanda',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEllie">Ellie</span> está olhando pro jardim mas não está vendo o jardim.</p>
+    <p class="narr">A Mel é boa, genuinamente boa, e vai se preocupar com Ellie enquanto está apaixonada pela Joy. E a Ellie vai deixar. Porque é assim que ela é.</p>
+    <p class="narr"><i>Ou não</i>, ela pensa. <i>Talvez não dessa vez.</i></p>
+  `,
+  choices:[
+    { tag:'CORAJOSA', text:'Ser honesta: "Eu preciso de distância por um tempo."', next:'ellie_pede_distancia', accent:'#40a8b8', flag:{ellie_pediu_distancia:true} },
+    { tag:'PADRÃO', text:'Ficar. Porque ficar é o que a Ellie sempre faz.', next:'ellie_fica_perto_mel', accent:'#7a6a70' },
+  ],
+  sw:['Ellie','Mel'],
+},
+
+ellie_pede_distancia: {
+  pov:'Ellie', loc:'Varanda',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Mel. Eu preciso de um pouco de distância. Não pra sempre. Só por um tempo. Não é punição. Não tô brava. Eu só preciso cuidar de mim.</div>
+    </div>
+    <p class="narr">A <span class="cMel">Mel</span> assente devagar. Ela entende — a Ellie vê que ela entende. Isso torna tudo levemente mais fácil e levemente mais triste ao mesmo tempo.</p>
+    <div class="aside-block"><span class="aside-icon">🌻</span><span><b class="cPoll">Pollyana</b> observa a varanda de longe. Assente suavemente, satisfeita.</span></div>
+  `,
+  choices:[
+    { tag:'ELLIE', text:'[Ellie] O que vem depois desse passo', next:'ellie_novo_capitulo', accent:'#40a8b8', flag:{ellie_avancou:true} },
+    { tag:'MEL', text:'[Mel] O que ela faz com esse vazio agora', next:'mel_pos_ellie', accent:'#d07090' },
+  ],
+  sw:['Ellie','Mel','Joy'],
+},
+
+mel_sai_quarto_joy: {
+  pov:'Mel', loc:'Corredor',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> sai do quarto da Joy de mansinho. O corredor está vazio.</p>
+    <p class="narr">Ela encosta na parede por um segundo, reorientando. O coração ainda está acelerado.</p>
+    <div class="aside-block"><span class="aside-icon">👂</span><span>Do fim do corredor — a voz do <b class="cEros">Eros</b> e da <b class="cJoy">Joy</b>. Baixa, mas ali.</span></div>
+  `,
+  choices:[
+    { tag:'CURIOSA', text:'Se aproximar. O que eles estão conversando?', next:'mel_ouve_eros_joy', accent:'#d09830', flag:{mel_ouviu:true} },
+    { tag:'RESPEITAR', text:'Ignorar. Descer pro jardim.', next:'jardim_mel_respira', accent:'#7a6a70' },
+  ],
+  sw:['Mel','Joy','Eros'],
+},
+
+mel_ouve_eros_joy: {
+  pov:'Mel', loc:'Corredor — atrás de uma porta',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> para. Não deveria escutar. Escuta.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text"><i>(voz tensa)</i> Você prometeu que não ia falar.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">E não falei. Mas ela vai descobrir eventualmente, Eros. Eu sei de tudo. Isso já é da minha conta.</div>
+    </div>
+    <p class="narr">Passos. Mel se afasta rápido.</p>
+    <p class="narr"><i>O que o Eros está escondendo? E a Joy sabe?</i></p>
+  `,
+  choices:[
+    { tag:'CONFRONTAR', text:'Confrontar a Joy agora — o que ela sabe?', next:'mel_confronta_joy_segredo', accent:'#e08060', flag:{mel_confrontou_joy_seg:true} },
+    { tag:'DIRETO', text:'Ir até o Eros diretamente', next:'mel_enfrenta_eros', accent:'#d09830' },
+    { tag:'AMIZADE', text:'Contar pra Ellie primeiro', next:'mel_conta_ellie_segredo', accent:'#40a8b8' },
+    { tag:'MUDAR', text:'Seguir o Eros — ver o que ele está carregando', next:'eros_segredo_pov', accent:'#d09830' },
+  ],
+  sw:['Mel','Joy','Eros','Ellie'],
+},
+
+mel_confronta_joy_segredo: {
+  pov:'Mel', loc:'Quarto da Joy',
+  heat:1,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">O que você e o Eros estavam conversando?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Você ouviu. Ele me contou algo sobre a Carluz. Não me cabe contar. É dele.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">E você não achou que devia me avisar?</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Envolvia o Eros me pedindo segredo. Eu respeito isso. Mesmo que doa.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'DISCORDAR', text:'"Eu entendo. Mas não gosto."', next:'mel_joy_tensao_post', accent:'#d07090', flag:{mel_nao_gostou:true} },
+    { tag:'ACEITAR', text:'"Tudo bem." Aceitar.', next:'mel_joy_aceita', accent:'#e08060' },
+    { tag:'DIRETO', text:'Ir falar com o Eros diretamente', next:'mel_enfrenta_eros', accent:'#d09830' },
+  ],
+  sw:['Mel','Joy','Eros'],
+},
+
+mel_joy_tensao_post: {
+  pov:'Mel', loc:'Quarto da Joy',
+  heat:1,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">A Joy tem códigos próprios, rígidos de um jeito inesperado. Quando alguém pede sigilo, ela guarda. Mesmo que doa.</div>
+    </div>
+    <p class="narr"><span class="cMel">Mel</span> não gosta. Mas entende.</p>
+  `,
+  choices:[
+    { tag:'CONTINUAR', text:'Continuar com a Joy mesmo assim', next:'mel_joy_ultima_noite', accent:'#e08060', flag:{mel_aceitou_joy_codigo:true} },
+    { tag:'EROS', text:'Ir falar com o Eros — precisa saber o que é', next:'mel_enfrenta_eros', accent:'#d09830' },
+  ],
+  sw:['Mel','Joy','Eros'],
+},
+
+mel_conta_ellie_segredo: {
+  pov:'Mel', loc:'Corredor',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> vai direto pra <span class="cEllie">Ellie</span> e conta o que ouviu.</p>
+    <p class="narr">A Ellie processa em silêncio.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Você precisa perguntar pra Joy primeiro. Antes de mais nada.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'CONFRONTAR', text:'Confrontar a Joy', next:'mel_confronta_joy_segredo', accent:'#e08060' },
+  ],
+  sw:['Mel','Ellie','Joy'],
+},
+
+mel_enfrenta_eros: {
+  pov:'Mel', loc:'Escritório',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> bate no escritório. O <span class="cEros">Eros</span> abre.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">O que você tá escondendo da Carluz?</div>
+    </div>
+    <p class="narr">Ele deixa ela entrar.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">Vi mensagens que não eram pra mim. Três semanas atrás. Não sabia como falar sem parecer acusação.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Eros. Você precisa falar com ele.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'MUDAR', text:'Ir pra perspectiva do Eros contando à Carluz', next:'eros_conta_carluz_tudo', accent:'#d09830' },
+    { tag:'JUNTO', text:'Mel vai junto com ele', next:'eros_carluz_conversa_honesta', accent:'#c8a840' },
+  ],
+  sw:['Mel','Eros','Carluz'],
+},
+
+jardim_mel_respira: {
+  pov:'Mel', loc:'Jardim',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> fica no jardim por um tempo, sentindo o sol. Deixa a conversa ouvida por acidente repousar.</p>
+    <p class="narr">O que quer que seja entre Eros e Joy, não é dela por enquanto.</p>
+  `,
+  choices:[
+    { tag:'ENTRAR', text:'Voltar pra dentro', next:'ultimo_dia_mansao', accent:'#7a6a70' },
+    { tag:'JOY', text:'A Joy aparece no jardim', next:'mel_piscina_joy', accent:'#e08060' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+carluz_sai_briga: {
+  pov:'Carluz', loc:'Corredor',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cCarluz">Carluz</span> sai do quarto e anda. O tipo de caminhar que é processar em movimento.</p>
+    <p class="narr">Ele viu as mensagens. Ficou três semanas com isso. Não contou pra ela — contou pra <span class="cJoy">Joy</span>.</p>
+    <p class="narr">Ele está com raiva. Também entende.</p>
+  `,
+  choices:[
+    { tag:'VOLTAR', text:'Voltar pro quarto — conversar de verdade', next:'eros_carluz_conversa_honesta', accent:'#d09830', flag:{carluz_voltou:true} },
+    { tag:'TEMPO', text:'Precisar de mais tempo', next:'ultimo_dia_mansao', accent:'#7a6a70' },
+  ],
+  sw:['Carluz','Eros'],
+},
+
+eros_carluz_tensao_nova: {
+  pov:'Eros', loc:'Quarto do casal',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEros">Eros</span> entra no quarto. A <span class="cCarluz">Carluz</span> fecha o celular — rápido, mas não rápido suficiente.</p>
+    <p class="narr">O silêncio tem aquela textura específica de quando dois adultos estão fingindo que algo não está pesando.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d09830"></span>EROS</div>
+      <div class="dial-text">Carluz. A gente precisa conversar.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'COMEÇAR', text:'A conversa começa', next:'eros_conta_carluz_tudo', accent:'#c8a840' },
+  ],
+  sw:['Eros','Carluz'],
+},
+
+// ─── ÚLTIMO DIA ──────────────────────────────────
+ultimo_dia_mansao: {
+  pov:'Mel', loc:'Mansão — último dia, jantar',
+  heat:1,
+  narr:`
+    <p class="narr">O jantar do último dia tem aquela qualidade estranha de final de viagem — todo mundo um pouco mais gentil, um pouco mais triste, sabendo que a mansão vai ficar pra trás.</p>
+    <p class="narr"><span class="cMel">Mel</span> e a <span class="cJoy">Joy</span> estão sentadas juntas — já é uma declaração que todo mundo vê mas ninguém comenta. A <span class="cSte">Stephany</span> e a <span class="cMary">Mary</span> do mesmo lado da mesa. O <span class="cEros">Eros</span> e a <span class="cCarluz">Carluz</span>, juntos como sempre, mas com um jeito diferente — mais quietos, mais reais. A <span class="cPoll">Pollyana</span> está no centro da mesa, como sempre, olhando pra todo mundo com aquele olhar que vê demais.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#c8a840"></span>CARLUZ</div>
+      <div class="dial-text">Então. A gente sobreviveu.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Alguns de nós sobreviveram melhor do que outros.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text"><i>(rindo)</i> Eu cheguei sem bagagem emocional.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">E saiu com a minha.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e07050"></span>POLLYANA</div>
+      <div class="dial-text"><i>(levantando o copo)</i> Pra isso. Pra quando a semana que devia destruir a gente vira a que nos rearruma.</div>
+    </div>
+    <p class="narr">Risadas. Genuínas. A tensão da semana inteira afrouxa.</p>
+  `,
+  choices:[
+    { tag:'MEL+JOY', text:'[Mel] A noite termina com a Joy', next:'mel_joy_ultima_noite', accent:'#e08060' },
+    { tag:'ELLIE', text:'[Ellie] Ver o que ela está sentindo nesse momento', next:'ellie_jantar_pov', accent:'#40a8b8' },
+    { tag:'STE+MARY', text:'[Stephany] Última noite com a Mary', next:'ste_mary_ultima_noite', accent:'#50b890' },
+    { tag:'POLLYANA', text:'[Pollyana] O que ela sente olhando pra tudo isso', next:'poll_jantar_pov', accent:'#e07050' },
+    { tag:'FINAL', text:'Avançar pro final coletivo', next:'ending_nova_ordem_3', accent:'#7a6a70' },
+  ],
+  sw:['Mel','Ellie','Stephany','Carluz','Eros','Mary','Joy','Pollyana'],
+},
+
+// ─── POLLYANA — JANTAR ───────────────────────────
+poll_jantar_pov: {
+  pov:'Pollyana', loc:'Mesa do jantar',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cPoll">Pollyana</span> está sentada no centro da mesa como sempre. Olhando pro que construiu ao longo da semana sem que ninguém pedisse.</p>
+    <p class="narr">A <span class="cMel">Mel</span> que se arriscou. A <span class="cSte">Stephany</span> que abriu. O <span class="cCarluz">Carluz</span> que foi honesto. A <span class="cEllie">Ellie</span> que pediu espaço pela primeira vez na vida.</p>
+    <p class="narr">Ela fez isso. Não sozinha — as pessoas fizeram. Mas ela segurou o espaço pra que fosse possível.</p>
+    <p class="narr">A <span class="cMel">Mel</span> pega a mão dela por baixo da mesa por um segundo. Não fala. Não precisa.</p>
+    <p class="narr"><span class="cPoll">Pollyana</span> olha pro copo de vinho. Pensa: <i>uma vez. Só uma vez eu precisava.</i></p>
+    <p class="narr">Essa foi.</p>
+  `,
+  choices:[
+    { tag:'FINAL', text:'→ O final da mansão', next:'ending_pollyana_ancora', accent:'#e07050' },
+    { tag:'TODOS', text:'→ Final coletivo — todo mundo mudado', next:'ending_nova_ordem_3', accent:'#c8a840' },
+  ],
+  sw:['Pollyana'],
+},
+
+// ─── CENAS FINAIS ÍNTIMAS ────────────────────────
+mel_joy_ultima_noite: {
+  pov:'Mel', loc:'Quarto da Joy — última noite',
+  heat:4,
+  narr:`
+    <p class="narr hot">Elas ficam no quarto da <span class="cJoy">Joy</span> depois que a mansão adormece.</p>
+    <p class="narr hot">A Joy acende velas e o quarto fica nessa luz laranja que deixa tudo mais íntimo. Elas ficam na cama falando por horas — sobre antes, sobre agora, sobre o que vem depois da mansão.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Quando a gente sair daqui amanhã, eu quero continuar tentando. Do jeito que eu disse. Mais devagar.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Eu também quero.</div>
+    </div>
+    <p class="narr hot">O "mais devagar" dura mais ou menos dois minutos depois disso.</p>
+    <p class="narr hot">A <span class="cJoy">Joy</span> a puxa pelo colarinho da camiseta — um gesto possessivo que <span class="cMel">Mel</span> nunca aprendeu a não adorar — e o beijo agora tem gosto de decisão feita. A Mel a vira — troca de posição, agora ela por cima — e a Joy sorri de baixo com aquele sorriso de quem ganhou a partida. <i>"Olha quem voltou"</i>, ela murmura. Mel ri e silencia ela do jeito mais eficiente disponível.</p>
+    <p class="narr hot">A última noite na mansão tem o comprimento certo — longa o suficiente pra valer, curta o suficiente pra deixar saudade.</p>
+  `,
+  choices:[
+    { tag:'FINAL', text:'Esse é o caminho', next:'ending_mel_joy_real', accent:'#e08060' },
+    { tag:'MANHÃ', text:'De manhã — a despedida', next:'ultimo_dia_mansao', accent:'#d07090' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+ste_mary_ultima_noite: {
+  pov:'Stephany', loc:'Quarto da Stephany — última noite',
+  heat:4,
+  narr:`
+    <p class="narr hot">A <span class="cMary">Mary</span> chega com uma garrafa de vinho e dois copos, como se fosse só mais uma noite. <span class="cSte">Stephany</span> abre a porta mais larga.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">A gente vai ter que inventar um sistema quando sair daqui. Você mora a quarenta minutos de mim. É longe demais pra continuar sendo assim.</div>
+    </div>
+    <p class="narr hot">A <span class="cMary">Mary</span> para. Aquele sorriso — devagar, genuíno.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">Você me pedindo pra ficar perto é a coisa mais bonita que já me disseram.</div>
+    </div>
+    <p class="narr hot">O vinho fica no criado-mudo. Os copos também.</p>
+    <p class="narr hot">A última noite delas tem a qualidade de algo que está virando hábito — no melhor sentido. <span class="cSte">Stephany</span> aprende onde a <span class="cMary">Mary</span> gosta de ser segurada, a Mary aprende que a Stephany precisa que digam que ficou bem antes de qualquer outra coisa, e os dois lados cedem e avançam e cedem de novo num ritmo que começa a parecer só deles.</p>
+    <p class="narr hot">Quando o dia começa a clarear, elas estão acordadas e tranquilas — sem pressa, sem medo de quem vai embora primeiro.</p>
+  `,
+  choices:[
+    { tag:'FINAL', text:'O começo de algo real', next:'ending_ste_mary_real', accent:'#50b890' },
+    { tag:'MANHÃ', text:'De manhã — a despedida coletiva', next:'ultimo_dia_mansao', accent:'#a060d0' },
+  ],
+  sw:['Stephany','Mary'],
+},
+
+ellie_jantar_pov: {
+  pov:'Ellie', loc:'Varanda — depois do jantar',
+  heat:0,
+  narr:`
+    <p class="narr">O jantar acaba e as pessoas se dispersam. <span class="cEllie">Ellie</span> fica na varanda com uma taça de vinho e o céu estrelado.</p>
+    <p class="narr">Ela pensa na semana. No que ela sentiu. No que ela decidiu sentir menos. Não está triste — isso a surpreende. Está um pouco vazia, um pouco leve. Como quando você larga alguma coisa pesada que estava carregando há tempo demais.</p>
+    <div class="aside-block"><span class="aside-icon">📱</span><span>Mensagem de número desconhecido: <i>"Ellie? É a Priya. Você me deu seu número no evento mês passado e nunca mandei mensagem. Finalmente coragem. Oi."</i></span></div>
+    <p class="narr"><span class="cEllie">Ellie</span> olha pro celular. Olha pro céu. Sorri — pequeno, mas real.</p>
+  `,
+  choices:[
+    { tag:'PRIYA', text:'Responder: "Oi, Priya. Que bom que você mandou."', next:'ending_ellie_novo_caminho', accent:'#40a8b8', flag:{ellie_priya:true} },
+    { tag:'DEPOIS', text:'Deixar pra depois. Aproveitar o último momento aqui.', next:'ending_ellie_paz', accent:'#7a6a70' },
+  ],
+  sw:['Ellie'],
+},
+
+// ─── CENAS AUXILIARES RESTANTES ──────────────────
+mel_joy_aceita: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:1,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Tá bem. Mais devagar. Mais honesta. Eu vou tentar.</div>
+    </div>
+    <p class="narr">A <span class="cJoy">Joy</span> exala. É um som pequeno — alívio contido.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text"><i>(baixinho)</i> Obrigada.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'IR', text:'A tarde continua — e a noite também', next:'mel_joy_ultima_noite', accent:'#e08060' },
+    { tag:'RESPIRAR', text:'Ficar na piscina. Tomar sol. Deixar a coisa respirar.', next:'ultimo_dia_mansao', accent:'#7a6a70' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+mel_joy_honesta_dor: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Eu não sei se consigo, Joy. Ainda dói. E eu não sei se consigo separar o amor do que dói.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Eu não tô pedindo que você separe. Tô pedindo que você deixe as duas coisas coexistir enquanto a gente tenta.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'TENTAR', text:'"Tá bem." Sentar do lado dela.', next:'mel_joy_silencio_piscina', accent:'#e08060', flag:{mel_escolheu_tentar:true} },
+    { tag:'TEMPO', text:'"Preciso de mais tempo."', next:'mel_tempo_joy', accent:'#d07090', flag:{mel_pediu_tempo:true} },
+  ],
+  sw:['Mel','Joy'],
+},
+
+mel_tempo_joy: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:0,
+  narr:`
+    <p class="narr">A <span class="cJoy">Joy</span> assente.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Eu vou estar aqui.</div>
+    </div>
+    <p class="narr">Elas ficam em silêncio por um tempo. Não junto — mas perto. É diferente de antes.</p>
+  `,
+  choices:[
+    { tag:'DEPOIS', text:'A semana continua. A decisão fica pra depois.', next:'ultimo_dia_mansao', accent:'#7a6a70' },
+    { tag:'FINAL', text:'Mel decide esperar antes de qualquer coisa', next:'ending_mel_espera', accent:'#d07090' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+mel_joy_recua_mas_fica: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:1,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Não aqui. Não assim. Mas... não vou embora.</div>
+    </div>
+    <p class="narr">A <span class="cJoy">Joy</span> sorri — aquele sorriso pequeno que Mel sempre achou mais honesto do que qualquer outra coisa nela.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text">Isso já é mais do que eu esperava.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'DENTRO', text:'Ir pra dentro juntas', next:'mel_joy_quarto', accent:'#e08060' },
+    { tag:'FICAR', text:'Ficar mais um pouco. Só isso por agora.', next:'mel_joy_aceita', accent:'#d07090' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+mel_joy_conversa_beira: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> senta do lado da <span class="cJoy">Joy</span> na espreguiçadeira. O calor do sol sobre os dois ombros.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Aqui tá mais perto do certo do que em lugar nenhum.</div>
+    </div>
+    <p class="narr">A <span class="cJoy">Joy</span> solta o ar devagar.</p>
+  `,
+  choices:[
+    { tag:'OUVIR', text:'Ouvir o que ela tem a dizer', next:'joy_piscina_confissao', accent:'#e08060' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+mel_joy_distancia: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> cruza os braços. Distância de segurança.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Fala.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'JOY', text:'Joy conta', next:'joy_piscina_confissao', accent:'#e08060' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+ellie_viu_janela_pov: {
+  pov:'Ellie', loc:'Cozinha',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEllie">Ellie</span> ainda está na janela da cozinha quando a xícara de café esfria na sua mão.</p>
+    <p class="narr">Ela viu. Elas vão entrar. Ela sabe.</p>
+    <p class="narr">Fica parada ali por um momento — com a dor específica de quem sabia que ia doer e não conseguiu se preparar de qualquer forma.</p>
+    <p class="narr">Depois coloca a xícara no escorredor. Vai pra biblioteca.</p>
+  `,
+  choices:[
+    { tag:'CONTINUAR', text:'[Ellie] Ir pra biblioteca', next:'ellie_biblioteca_sozinha', accent:'#40a8b8' },
+  ],
+  sw:['Ellie','Pollyana'],
+},
+
+mel_viu_ellie_janela: {
+  pov:'Mel', loc:'Beira da piscina',
+  heat:1,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> olha pra janela da cozinha. Vazia agora.</p>
+    <p class="narr">A Ellie viu. Ela sabe que a Ellie viu.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#e08060"></span>JOY</div>
+      <div class="dial-text"><i>(suave)</i> Vai falar com ela.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">E você? — Eu fico aqui. Você sabe onde me encontrar depois.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ELLIE', text:'Ir falar com a Ellie', next:'ellie_mel_confronto_real', accent:'#40a8b8', flag:{mel_foi_ellie_primeiro:true} },
+    { tag:'JOY', text:'Ficar com a Joy. Ellie pode esperar.', next:'mel_joy_quarto', accent:'#e08060' },
+  ],
+  sw:['Mel','Joy','Ellie'],
+},
+
+ellie_ste_news_mary: {
+  pov:'Ellie', loc:'Corredor',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEllie">Ellie</span> encontra a <span class="cSte">Stephany</span> já no corredor. Elas trocam um olhar.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">Você sabe.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Eu sei. E a Mary tá procurando você. — Então por que você tá aqui e ela tá lá?</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ADMITIR', text:'Stephany: "Porque eu tenho medo."', next:'ste_admite_medo_ellie', accent:'#a060d0' },
+    { tag:'IR', text:'Stephany vai. Ellie fica.', next:'ellie_biblioteca_sozinha', accent:'#40a8b8' },
+  ],
+  sw:['Ellie','Stephany','Mary'],
+},
+
+ellie_busca_ste: {
+  pov:'Ellie', loc:'Corredor',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEllie">Ellie</span> vai atrás da <span class="cSte">Stephany</span>. Encontra ela no corredor sem destino.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">A Mary me contou. Você sumiu essa manhã. — Precisa de ar. — Precisa de ar depois de uma coisa boa não é fuga? — É fuga também.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'IR', text:'"Vai lá, Ste."', next:'ste_manha_sozinha', accent:'#50b890' },
+  ],
+  sw:['Ellie','Stephany'],
+},
+
+mary_conta_ste_noite: {
+  pov:'Mary', loc:'Biblioteca',
+  heat:1,
+  narr:`
+    <p class="narr">A <span class="cMary">Mary</span> conta o emocional — não o explícito. Como a <span class="cSte">Stephany</span> foi diferente. Como ela ficou. Como acordar sozinha depois disso foi a coisa mais fria que já sentiu.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">A Stephany não faz isso. Ela nunca fez isso. Ela foi embora porque ficou com medo. Não porque não quer. Esses dois são muito diferentes.</div>
+    </div>
+    <p class="narr">A <span class="cMary">Mary</span> para.</p>
+  `,
+  choices:[
+    { tag:'IR', text:'"Então eu preciso ir falar com ela."', next:'mary_procura_ste', accent:'#50b890' },
+  ],
+  sw:['Mary','Ellie','Stephany'],
+},
+
+mel_tenta_ellie: {
+  pov:'Mel', loc:'Varanda',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Não é justo pra você, Ellie. Eu sei disso.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Justo e real são coisas diferentes. O que é real é que você e a Joy têm uma história que precisa de um final ou de um recomeço. — E você? — Eu fico bem. Prometo. Mas vou precisar de espaço por um tempo.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ACEITAR', text:'Aceitar. Dar esse espaço.', next:'ellie_pede_distancia', accent:'#40a8b8' },
+  ],
+  sw:['Mel','Ellie'],
+},
+
+mel_preocupa_ellie: {
+  pov:'Mel', loc:'Varanda',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Eu não quero te machucar, Ellie.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Você não está me machucando. A vida tá me machucando. Tem diferença. Vai lá, Mel. Vai ser com quem você quer ser. Só não some de mim.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ABRAÇAR', text:'"Nunca." Abraçar ela.', next:'ellie_pede_distancia', accent:'#40a8b8', flag:{mel_abraçou_ellie:true} },
+  ],
+  sw:['Mel','Ellie'],
+},
+
+mel_vai_atras_ellie_real: {
+  pov:'Mel', loc:'Corredor',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> sai do quarto da Joy e vai direto pro corredor. Bate na porta da Ellie. Demora. Mas ela abre.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text"><i>(surpresa)</i> Mel.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#d07090"></span>MEL</div>
+      <div class="dial-text">Eu precisava te ver. Precisava saber que você tá bem. — Tô bem. — Mas... — Mas. Sim. Mas.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'ENTRAR', text:'Entrar. Conversar de verdade.', next:'ellie_mel_confronto_real', accent:'#40a8b8' },
+  ],
+  sw:['Mel','Ellie'],
+},
+
+mel_ignora_ellie_novo: {
+  pov:'Mel', loc:'Quarto da Joy',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> ouve a <span class="cJoy">Joy</span> respirando ao lado. A notificação da <span class="cEllie">Ellie</span> passa pela mente — e fica.</p>
+    <p class="narr">Amanhã ela fala. Hoje é hoje.</p>
+  `,
+  choices:[
+    { tag:'ÚLTIMO DIA', text:'O último dia chega', next:'ultimo_dia_mansao', accent:'#7a6a70' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+mel_pos_ellie: {
+  pov:'Mel', loc:'Corredor',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cMel">Mel</span> fica parada no corredor depois que a <span class="cEllie">Ellie</span> fecha a porta.</p>
+    <p class="narr">Ela merece o que pediu. Merece mais do que isso. <span class="cMel">Mel</span> volta pro quarto da Joy.</p>
+  `,
+  choices:[
+    { tag:'CONTINUAR', text:'A tarde continua', next:'mel_joy_ultima_noite', accent:'#e08060' },
+  ],
+  sw:['Mel','Joy'],
+},
+
+ellie_novo_capitulo: {
+  pov:'Ellie', loc:'Mansão — tarde',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEllie">Ellie</span> volta pro quarto. Faz a mala com cuidado. Pensa no que vem depois da mansão — não com tristeza, mas com uma abertura nova.</p>
+    <p class="narr">Aquela mensagem no celular espera por ela.</p>
+  `,
+  choices:[
+    { tag:'RESPONDER', text:'Responder a Priya', next:'ending_ellie_novo_caminho', accent:'#40a8b8' },
+    { tag:'JANTAR', text:'O jantar final com todo mundo', next:'ultimo_dia_mansao', accent:'#7a6a70' },
+  ],
+  sw:['Ellie'],
+},
+
+ellie_nao_responde_mel: {
+  pov:'Ellie', loc:'Corredor',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEllie">Ellie</span> olha pro celular por um segundo. Guarda no bolso. Continua andando. Vai responder. Só não agora.</p>
+  `,
+  choices:[
+    { tag:'BIBLIOTECA', text:'Ir pra biblioteca', next:'ellie_biblioteca_sozinha', accent:'#40a8b8' },
+    { tag:'FINAL', text:'Ellie toma um novo rumo', next:'ending_ellie_paz', accent:'#40a8b8' },
+  ],
+  sw:['Ellie','Mel'],
+},
+
+ellie_fica_perto_mel: {
+  pov:'Ellie', loc:'Varanda',
+  heat:0,
+  narr:`
+    <p class="narr"><span class="cEllie">Ellie</span> fica. É o que ela sempre faz — fica. A <span class="cMel">Mel</span> parece aliviada e levemente culpada ao mesmo tempo. A Ellie sabe que vai ter que mudar isso um dia. Mas hoje não.</p>
+  `,
+  choices:[
+    { tag:'ÚLTIMO DIA', text:'O último dia da mansão', next:'ultimo_dia_mansao', accent:'#7a6a70' },
+  ],
+  sw:['Ellie','Mel'],
+},
+
+ellie_afasta_mary: {
+  pov:'Ellie', loc:'Biblioteca',
+  heat:0,
+  narr:`
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#40a8b8"></span>ELLIE</div>
+      <div class="dial-text">Mary, tô passando por uma coisa. Não tô com cabeça agora.</div>
+    </div>
+    <p class="narr">A <span class="cMary">Mary</span> percebe mais do que Ellie quis mostrar.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">Tá bem. Mas... tô aqui, tá?</div>
+    </div>
+  `,
+  choices:[
+    { tag:'STEPHANY', text:'Depois de um tempo, ir atrás da Stephany', next:'ellie_busca_ste', accent:'#a060d0' },
+    { tag:'FICAR', text:'Ficar na biblioteca', next:'ellie_jantar_pov', accent:'#40a8b8' },
+  ],
+  sw:['Ellie','Mary'],
+},
+
+ste_mary_real_agora: {
+  pov:'Stephany', loc:'Biblioteca — depois',
+  heat:0,
+  narr:`
+    <p class="narr">Elas ficam enroladas no sofá da biblioteca por uma hora que passa rápido demais. A <span class="cSte">Stephany</span> não fugiu dessa vez. A <span class="cMary">Mary</span> percebe isso e não faz comentário — só fica.</p>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#a060d0"></span>STEPHANY</div>
+      <div class="dial-text">Você vai morar pertinho de mim quando sair daqui.</div>
+    </div>
+    <div class="dial-card">
+      <div class="dial-speaker"><span class="dial-speaker-dot" style="background:#50b890"></span>MARY</div>
+      <div class="dial-text">É um plano ou uma proposta? — As duas coisas.</div>
+    </div>
+  `,
+  choices:[
+    { tag:'FINAL', text:'O começo de algo real', next:'ending_ste_mary_real', accent:'#50b890' },
+    { tag:'ÚLTIMA NOITE', text:'A última noite na mansão', next:'ste_mary_ultima_noite', accent:'#a060d0' },
+  ],
+  sw:['Stephany','Mary'],
+},
+
+// ════════════════════════════════════
+// ENDINGS
+// ════════════════════════════════════
+ending_mel_joy_real: {
+  ending:true, type:'flame',
+  title:'Segundo Começo',
+  bgWord:'CHAMAS',
+  text:'Mel e Joy saem da mansão juntas. Não como eram antes — isso ficou pra trás de vez. Mas como algo novo, escolhido de olhos abertos, com a história toda pesando nos ombros e mesmo assim. A Mel sabe que pode se machucar de novo. Escolhe de qualquer forma.',
+  flag:'💋 Mel + Joy — amor difícil, mas real',
+},
+
+ending_ste_mary_real: {
+  ending:true, type:'bloom',
+  title:'Quarenta Minutos',
+  bgWord:'PERTO',
+  text:'Stephany e Mary saem com planos concretos — quarenta minutos de distância, conversas todo dia, construção devagar. A Stephany aprende a pedir coisas. A Mary aprende a dar espaço sem sumir. É trabalho. Vale.',
+  flag:'🌿 Stephany + Mary — o começo que importa',
+},
+
+ending_eros_carluz_rebuild: {
+  ending:true, type:'ember',
+  title:'Reconstituição',
+  bgWord:'VOLTA',
+  text:'Eros e Carluz saem da mansão com uma conversa honesta como bagagem. Não resolveram tudo — não se resolve tudo numa semana. Mas quebraram o padrão de ficar quieto quando a coisa pesa. É por onde se começa.',
+  flag:'⚡🔥 Eros + Carluz — ainda juntos, mais honestos',
+},
+
+ending_eros_carluz_decisao: {
+  ending:true, type:'storm',
+  title:'Cruzamento',
+  bgWord:'ESCOLHA',
+  text:'Eles param num cruzamento onde nenhum sabe qual caminho tomar. A Carluz não sabe o que sente pela Lara. O Eros não sabe o que faria com essa resposta. Alguns amores chegam nessa encruzilhada onde o amor não é o problema — é tudo ao redor dele.',
+  flag:'⚡ Eros + Carluz — sem resposta fácil',
+},
+
+ending_nova_ordem_3: {
+  ending:true, type:'bloom',
+  title:'Depois da Chama',
+  bgWord:'RESTO',
+  text:'A mansão fica pra trás. Mel e Joy tentando de novo. Stephany e Mary, devagar. Eros e Carluz reconstruindo. Ellie com uma mensagem nova no celular e uma abertura que não tinha quando chegou. Pollyana no jardim sozinha pela primeira vez na semana — e bem. Ninguém saiu ileso. Todos saíram diferentes.',
+  flag:'🏠 Final coletivo — todo mundo mudado, ninguém arrependido',
+},
+
+ending_ellie_novo_caminho: {
+  ending:true, type:'bloom',
+  title:'Além da Varanda',
+  bgWord:'HORIZONTE',
+  text:'Ellie responde a mensagem da Priya. Elas conversam por horas naquela noite. É diferente — leve de um jeito que Ellie esqueceu como era. A mansão ensinou o que não queria: que amar alguém que não pode te amar de volta é uma escolha que só você pode parar de fazer.',
+  flag:'🌊 Ellie — novo horizonte',
+},
+
+ending_ellie_paz: {
+  ending:true, type:'smoke',
+  title:'A Observadora',
+  bgWord:'INTEIRA',
+  text:'Ellie sai da mansão como entrou — quieta, de olhos abertos. Mas diferente. Ela carrega algo que não tinha: a certeza de que merece mais do que o amor que ela aceita. É um começo.',
+  flag:'🌊 Ellie — inteira',
+},
+
+ending_mel_espera: {
+  ending:true, type:'smoke',
+  title:'Tempo Próprio',
+  bgWord:'TEMPO',
+  text:'Mel decide não decidir. A Joy aceita. Elas saem sem rótulo, sem pressa — com a porta aberta. Às vezes o final mais corajoso não é escolher. É se dar o direito de esperar saber.',
+  flag:'💋 Mel — tempo no próprio ritmo',
+},
+
+ending_pollyana_ancora: {
+  ending:true, type:'ember',
+  title:'A Âncora',
+  bgWord:'CENTRO',
+  text:'Pollyana fica no jardim depois que os últimos carros somem pela estrada. A mansão está silenciosa pela primeira vez em dias. Ela olha pra janela — cada janela com uma história que ela ajudou a não afundar. Ela não sabe se é isso que queria ser. Mas sabe que foi necessária. E que dessa vez, pela primeira vez, alguém perguntou o que ela queria. E ela respondeu.',
+  flag:'🌻 Pollyana — o coração que ficou',
+},
+
+};
+
+// ══════════════════════════════════════════════
+// ENGINE
+// ══════════════════════════════════════════════
+function startGame() {
+  document.getElementById('splash').style.display = 'none';
+  document.getElementById('gameview').style.display = 'block';
+  buildSidebar();
+  goTo('abertura');
+}
+
+function buildSidebar() {
+  const list = document.getElementById('char-list');
+  list.innerHTML = '';
+  Object.entries(CHARS).forEach(([name, cfg]) => {
+    const btn = document.createElement('button');
+    btn.className = 'char-btn';
+    btn.id = 'cb-' + name;
+    btn.innerHTML = `<span class="char-btn-dot" style="background:${cfg.color}"></span><span class="char-btn-name">${name}</span><span class="char-btn-emoji">${cfg.emoji}</span>`;
+    btn.onclick = () => switchPOV(name);
+    list.appendChild(btn);
+  });
+
+  // Tension meters
+  const meters = document.getElementById('tension-meters');
+  meters.innerHTML = '';
+  Object.entries(CHARS).forEach(([name, cfg]) => {
+    meters.innerHTML += `
+      <div class="tension-bar-wrap">
+        <div class="tension-name">${name.toUpperCase()}</div>
+        <div class="tension-bar"><div class="tension-fill" id="tf-${name}" style="width:${TENSION[name]}%;background:${cfg.color}"></div></div>
+      </div>`;
+  });
+  updateSidebar();
+}
+
+function updateSidebar() {
+  document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('active'));
+  const a = document.getElementById('cb-' + G.pov);
+  if (a) a.classList.add('active');
+}
+
+function updateTension(flags) {
+  // Adjust tension based on key flags
+  if (flags.mel_aceitou_joy) { TENSION.Mel = Math.min(100, TENSION.Mel + 10); TENSION.Joy = Math.max(20, TENSION.Joy - 15); }
+  if (flags.ste_mary_oficial) { TENSION.Stephany = Math.max(20, TENSION.Stephany - 20); TENSION.Mary = Math.max(20, TENSION.Mary - 15); }
+  if (flags.eros_carluz_virada) { TENSION.Eros = Math.max(20, TENSION.Eros - 10); TENSION.Carluz = Math.max(20, TENSION.Carluz - 10); }
+  if (flags.poll_se_abriu) { TENSION.Pollyana = Math.max(10, TENSION.Pollyana - 15); }
+
+  Object.keys(CHARS).forEach(name => {
+    const fill = document.getElementById('tf-' + name);
+    if (fill) fill.style.width = TENSION[name] + '%';
+  });
+}
+
+function switchPOV(name) {
+  let found = Object.entries(S).find(([id, sc]) => sc.pov === name && !sc.ending && !G.hist.includes(id));
+  if (!found) found = Object.entries(S).find(([id, sc]) => sc.pov === name && !sc.ending);
+  if (found) { G.pov = name; updateSidebar(); goTo(found[0]); }
+}
+
+function goTo(id, flag) {
+  if (flag) {
+    Object.assign(G.flags, flag);
+    updateTension(G.flags);
+  }
+  const sc = S[id];
+  if (!sc) return;
+  if (sc.ending) { showEnd(sc); return; }
+  G.hist.push(id);
+  G.sceneCount++;
+  G.pov = sc.pov;
+  updateSidebar();
+  renderScene(sc);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const HEAT_LABELS = ['NEUTRO', 'AQUECENDO', 'QUENTE', 'MUITO QUENTE', 'EXPLÍCITO'];
+
+function renderScene(sc) {
+  const area = document.getElementById('scene-area');
+  const charColor = CHARS[sc.pov]?.color || '#fff';
+
+  // Update heat indicator
+  const heatLabel = document.getElementById('heat-label');
+  const pips = document.querySelectorAll('.pip');
+  if (heatLabel) heatLabel.textContent = HEAT_LABELS[sc.heat || 0];
+  pips.forEach((p, i) => {
+    p.classList.remove('lit', 'hot');
+    if (i < (sc.heat || 0)) {
+      p.classList.add(sc.heat >= 3 ? 'hot' : 'lit');
+    }
+  });
+
+  // Build choices
+  let choicesHtml = '';
+  if (sc.choices) {
+    const cols = sc.choices.length <= 2 ? '1fr 1fr' : sc.choices.length === 3 ? '1fr 1fr 1fr' : 'repeat(auto-fit, minmax(200px, 1fr))';
+    choicesHtml = `
+      <div id="choices-area">
+        <div class="choices-label">— ESCOLHA —</div>
+        <div class="choices-grid" style="grid-template-columns:${cols}">
+          ${sc.choices.map(c => {
+            const accent = c.accent || '#c85a1a';
+            const fl = c.flag ? JSON.stringify(c.flag) : '{}';
+            return `
+              <button class="choice-card" style="--card-accent:${accent}" onclick="goTo('${c.next}',${fl})">
+                ${c.tag ? `<span class="choice-tag">${c.tag}</span>` : ''}
+                <span class="choice-text">${c.text}</span>
+                <span class="choice-arrow">→</span>
+              </button>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }
+
+  // Build POV switch
+  let povHtml = '';
+  if (sc.sw && sc.sw.length > 1) {
+    const others = sc.sw.filter(n => n !== sc.pov);
+    povHtml = `
+      <div class="pov-switch-row">
+        <div class="pov-switch-label">— TROCAR PERSPECTIVA —</div>
+        ${others.map(n => `
+          <button class="pov-btn" onclick="switchPOV('${n}')">
+            <span class="pov-btn-dot" style="background:${CHARS[n]?.color||'#fff'}"></span>
+            ${CHARS[n]?.emoji || ''} ${n}
+          </button>`).join('')}
+      </div>`;
+  }
+
+  area.innerHTML = `
+    <div class="scene-header">
+      <div class="scene-pov-block">
+        <div class="pov-who" style="color:${charColor}">${sc.pov}</div>
+        <div class="pov-loc"><span>${CHARS[sc.pov]?.emoji || ''}</span> ${sc.loc}</div>
+      </div>
+      <div class="scene-number">CENA ${G.sceneCount}</div>
+    </div>
+    <div class="narr-body">${sc.narr}</div>
+    ${choicesHtml}
+    ${povHtml}
+  `;
+}
+
+function showEnd(sc) {
+  document.getElementById('gameview').style.display = 'none';
+  const es = document.getElementById('endscreen');
+  es.style.display = 'flex';
+
+  const titleEl = document.getElementById('end-title');
+  titleEl.textContent = sc.title;
+  titleEl.className = `end-title ${sc.type}`;
+
+  document.getElementById('end-text').textContent = sc.text;
+  document.getElementById('end-flag').textContent = sc.flag || '';
+  document.getElementById('end-bg-word').textContent = sc.bgWord || 'FIM';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restart() {
+  G = { pov: 'Mel', flags: {}, hist: [], sceneCount: 0 };
+  // Reset tensions
+  Object.entries(CHARS).forEach(([k, v]) => TENSION[k] = v.tension);
+  document.getElementById('endscreen').style.display = 'none';
+  document.getElementById('splash').style.display = 'grid';
+}
+</script>
+</body>
+</html>
